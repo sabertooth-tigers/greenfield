@@ -1,0 +1,7 @@
+**/javascript/**
+node_modules/*
+react-env/spec/*
+react-env/dist/*
+react-env/css/*
+**/node_modules/**
+webpack.config.js

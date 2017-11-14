@@ -4,13 +4,6 @@ var app = express();
 
 app.use(express.static(__dirname + '/../react-env/dist'));
 
-
-
-
-
-
-
-
 app.listen(process.env.PORT || 3000, err => {
   if (err) {
     throw Error(err);
