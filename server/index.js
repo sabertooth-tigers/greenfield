@@ -20,11 +20,6 @@ app.get('/', (req, res) => {
   console.log('Now processing get from external source');
 });
 
-app.post('/Users', () => {
-  console.log('Now processing get for Users');
-});
-
-
 app.get('/Users', () => {
   console.log('Now processing get for Users');
 });
