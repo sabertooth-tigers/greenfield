@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {HashRouter, Switch, Route, Link} from 'react-router-dom';
 import $ from 'jquery';
 
+andrew = 22;
+console.log(andrew)
 
 let Mike = () => (
   <div>
