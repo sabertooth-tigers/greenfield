@@ -1,55 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {HashRouter, Switch, Route, Link} from 'react-router-dom';
-import $ from 'jquery';
+import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+// import $ from 'jquery';
 
-andrew = 22;
-console.log(andrew)
-
-let Mike = () => (
+const Home = () => (
   <div>
-    <Link to='/mike2'>mike</Link>
-    mike is cool
+  But why
   </div>
 );
 
-
-let Mike2 = () => (
-  <div>
-    mike is cool 2.0
-  </div>
+const Header = () => (
+  <Link to="/">Home</Link>
 );
 
-let Kevin = () => (
-  <div>
-i hate kevin
-  </div>
-);
-
-let MikeRouter = () => (
+const Main = () => (
   <Switch>
-    <Route exact path='/mike' component={Mike} />
-    <Route path='/mike2' component={Mike2} />
-  </Switch>
-);
-
-let Main = () => (
-  <Switch>
-    <Route exact path='/' component={Kevin} />
-    <Route path='/mike' component={MikeRouter} />
+    <Route exact path="/home" component={Home} />
   </Switch>
 );
 
 
-let App = () => (
+const App = () => (
   <div>
-    <Link to='/mike'>mike</Link>
-    <Main/>
+    <Header />
+    <Main />
+
   </div>
 );
 
 ReactDOM.render(
   <HashRouter>
-    <App/>
+    <App />
   </HashRouter>
-, document.getElementById('root'));
+  , document.getElementById('root'),
+);
+
+// app will have header and main
