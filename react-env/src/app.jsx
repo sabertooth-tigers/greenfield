@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 import Home from './components/Home.jsx';
+import SignUp from './components/SignUp.jsx';
 // import $ from 'jquery';
 
 
@@ -33,6 +34,7 @@ const Footer = () => (
 const Main = () => (
   <Switch>
     <Route exact path="/" component={Home} />
+    <Route path="/signup" component={SignUp} />
   </Switch>
 );
 
