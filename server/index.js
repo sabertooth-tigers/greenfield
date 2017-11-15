@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
+// const Promise = require('bluebird'); // Probably won't be dealing with any promises
 
 const app = express();
 
