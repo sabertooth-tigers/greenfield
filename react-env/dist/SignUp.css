@@ -1,0 +1,18 @@
+#SignUp {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 75px 50px 75px;
+  max-width: 300px;
+  margin: 12% auto;
+  justify-content: space-around;
+  background: whitesmoke;
+}
+
+#SignUp > h2 {
+  text-align: center;
+}
+
+#SignUp > button {
+  margin: 0 auto;
+  width: 90px;
+}
