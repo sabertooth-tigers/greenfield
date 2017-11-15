@@ -10,7 +10,7 @@ const Entry = () => (
   <div className="entry">
     This is the entry component
     <div>
-      problems
+        problems
     </div>
     <div>
       topics
