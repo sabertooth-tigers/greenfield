@@ -7,6 +7,32 @@ dbConnect.once('open', () => {
   console.log('Successfully connected');
 });
 
-// const userSchema = mongoose.Schema({
-//
-// });
+const USERS = ['generalUser', 'moderator', 'admin'];
+const userSchema = mongoose.Schema({
+  // May not need unique
+  role: { type: String, enum: USERS },
+  username: String,
+  password: String,
+  salt: String,
+  email: String,
+  id: { type: String, index: { unique: true } },
+});
+
+const threadSchema = mongoose.Schema({
+  // May not need unique
+  id: { type: String, index: { unique: true } },
+  creatorId: String,
+  description: String,
+  title: String,
+  createdAt: Date,
+  // Vote pushed off
+});
+
+const commentSchema = mongoose.Schema({
+  // May not need unique
+  id: { type: String, index: { unique: true } },
+  text: String,
+  userId: String,
+  createdAt: Date,
+  vote: Number,
+});
