@@ -1,21 +1,38 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Home from './components/Home.jsx';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 // import $ from 'jquery';
 
-const Home = () => (
-  <div>
-  But why
-  </div>
-);
 
 const Header = () => (
-  <Link to="/">Home</Link>
+  <nav>
+    <div>
+      <Link to="/">Home</Link>
+    </div>
+    <div>
+      <Link to="/login">Login</Link>
+      <Link to="/signup">Sign Up</Link>
+    </div>
+  </nav>
+
 );
 
+const Footer = () => (
+  <div>
+    <div>
+      <Link to="/">Home</Link>
+    </div>
+    <div>
+      <Link to="/login">Login</Link>
+      <Link to="/signup">Sign Up</Link>
+    </div>
+  </div>
+
+);
 const Main = () => (
   <Switch>
-    <Route exact path="/home" component={Home} />
+    <Route exact path="/" component={Home} />
   </Switch>
 );
 
@@ -24,7 +41,7 @@ const App = () => (
   <div>
     <Header />
     <Main />
-
+    <Footer />
   </div>
 );
 
