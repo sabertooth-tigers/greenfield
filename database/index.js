@@ -7,6 +7,6 @@ dbConnect.once('open', () => {
   console.log('Successfully connected');
 });
 
-const userSchema = mongoose.Schema({
-
-});
+// const userSchema = mongoose.Schema({
+//
+// });
