@@ -1,9 +1,8 @@
-/* eslint-env browser */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
-import Home from './components/Home.jsx';
-import SignUp from './components/SignUp.jsx';
+import Home from './components/Home';
+import SignUp from './components/SignUp';
 // import $ from 'jquery';
 
 

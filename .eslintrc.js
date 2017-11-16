@@ -1,9 +1,10 @@
 module.exports = {
-    "extends": "airbnb",
-    "rules": {
-      "func-names": ["error", "never"]
-    },
-    "env": {
-      "browser": true
-    }
+	"extends": "airbnb",
+	"rules": {
+			"jsx-a11y/anchor-is-valid": [ "error", {
+					"components": [ "Link" ],
+					"specialLink": [ "hrefLeft", "hrefRight", "to" ],
+					"aspects": [ "noHref", "invalidHref", "preferButton" ]
+				}]
+	}
 }
