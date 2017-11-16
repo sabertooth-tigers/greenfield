@@ -55,7 +55,7 @@ exports.saveUser = (user) => {
   newUser.save((err) => { if (err) return err; return true; });
 };
 
- exports.saveThread = (thread) => {
+exports.saveThread = (thread) => {
   const newThread = new ThreadModel({
     threadId: thread.id,
     creatorId: thread.creator,

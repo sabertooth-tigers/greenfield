@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
@@ -39,7 +40,6 @@ app.post('/Users', (req, res) => {
         salt: generatedSalt,
         email: req.body.email,
       };
-
 
       db.saveUser(model);
       res.end();
