@@ -41,7 +41,6 @@ app.post('/Users', (req, res) => {
         email: req.body.email,
       };
 
-
       db.saveUser(model);
       res.end();
     });
