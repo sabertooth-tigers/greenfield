@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
+const bcrypt = require('bcryptjs');
 // const Promise = require('bluebird'); // Probably won't be dealing with any promises
 
 const app = express();
@@ -27,6 +28,22 @@ app.get('/Users', (req, res) => {
 
 app.post('/Users', (req, res) => {
   console.log('Now processing post for Users');
+  const generatedSalt = bcrypt.genSaltSync(10);
+
+  bcrypt.hash(req.body.password, generatedSalt)
+    .then((hash) => {
+      const model = {
+        role: 'generalUser',
+        username: req.body.username,
+        password: hash,
+        salt: generatedSalt,
+        email: req.body.email,
+      };
+
+
+      db.saveUser(model);
+      res.end();
+    });
 });
 
 app.get('/Threads', (req, res) => {
