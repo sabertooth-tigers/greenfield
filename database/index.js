@@ -113,12 +113,7 @@ exports.findComments = (id, callback) => {
 };
 
 //  Can be refactored
-exports.saveUser = saveUser;
-exports.saveThread = saveThread;
-exports.saveComment = saveComment;
-exports.findUser = findUser;
-exports.findThread = findThread;
-exports.findComments = findComments;
+
 
 // Search for thread, find thread by parameter
 // Search for thread by ID
