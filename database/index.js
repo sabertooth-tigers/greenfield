@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 //  You might have to clear your original test db or change this to a new database
-mongoose.connect('mongo://localhost/test');
+mongoose.connect('mongodb://localhost/test');
 const dbConnect = mongoose.connection;
 dbConnect.on('error', console.error.bind('Connection error'));
 dbConnect.once('open', () => {
@@ -16,12 +16,11 @@ const userSchema = mongoose.Schema({
   password: String,
   salt: String,
   email: String,
-  userId: { type: String, index: { unique: true } },
 });
 
 const threadSchema = mongoose.Schema({
   // May not need unique
-  threadId: { type: String, index: { unique: true } },
+  // threadId: { type: String, index: { unique: true } },
   creatorId: String,
   description: String,
   title: String,
@@ -30,7 +29,6 @@ const threadSchema = mongoose.Schema({
 
 const commentSchema = mongoose.Schema({
   // May not need unique
-  commentId: { type: String, index: { unique: true } },
   text: String,
   threadId: String,
   userId: String,
@@ -95,7 +93,7 @@ const findUser = (id, callback) => {
 };
 
 const findThread = (id, callback) => {
-  ThreadModel.find({ threadId: id }, (err, data) => {
+  ThreadModel.find({ _id: id }, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
