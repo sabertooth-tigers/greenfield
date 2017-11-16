@@ -10,7 +10,7 @@ class SignUp extends React.Component {
       username: '',
       password: '',
       confirmPassword: '',
-      error: '',
+      statusMessage: '',
     };
 
     // this is here simply so i don't have to use .bind for every call. (also render looks cleaner)
@@ -42,11 +42,11 @@ class SignUp extends React.Component {
   // otherwise removes error (or doesnt really setstate if no error) and invokes post request
   submit() {
     if (this.state.password !== this.state.confirmPassword) {
-      this.setState({ error: 'Please make sure both password fields match.' });
+      this.setState({ statusMessage: 'Please make sure both password fields match.' });
     } else {
-      this.setState({ error: '' });
+      this.setState({ statusMessage: 'Account created' });
 
-      $.post('/signup', {
+      $.post('/Users', {
         email: this.state.email,
         username: this.state.username,
         password: this.state.password,
@@ -61,7 +61,7 @@ class SignUp extends React.Component {
     return (
       <div id="SignUp">
         <h2> Create A New Account</h2>
-        <p>{this.state.error}</p>
+        <p>{this.state.statusMessage ? this.state.statusMessage : <br />}</p>
         Email: <input onChange={this.emailQuery} type="text" />
         <br />
         Username: <input onChange={this.usernameQuery} type="text" />
