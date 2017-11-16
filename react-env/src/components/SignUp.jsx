@@ -35,7 +35,7 @@ class SignUp extends React.Component {
   }
 
   confirmPasswordQuery(event) {
-    this.setState({ password: event.target.value });
+    this.setState({ confirmPassword: event.target.value });
   }
 
   // will error and do nothing if passwords dont match
