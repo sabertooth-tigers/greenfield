@@ -42,7 +42,7 @@ const ThreadModel = mongoose.model('ThreadModel', threadSchema);
 const CommentModel = mongoose.model('CommentModel', commentSchema);
 
 // Do we need to return for save?
-const saveUser = (user) => {
+exports.saveUser = (user) => {
   const newUser = new UserModel({
     role: user.role,
     username: user.username,
@@ -55,7 +55,7 @@ const saveUser = (user) => {
   newUser.save((err) => { if (err) return err; return true; });
 };
 
-const saveThread = (thread) => {
+ exports.saveThread = (thread) => {
   const newThread = new ThreadModel({
     threadId: thread.id,
     creatorId: thread.creator,
@@ -67,7 +67,7 @@ const saveThread = (thread) => {
   newThread.save((err) => { if (err) return err; return true; });
 };
 
-const saveComment = (comment) => {
+exports.saveComment = (comment) => {
   const newComment = new CommentModel({
     commentId: comment.id,
     text: comment.text,
@@ -81,8 +81,8 @@ const saveComment = (comment) => {
 
 // .sort({'date': 'descending'})
 
-const findUser = (id, callback) => {
-  UserModel.find({ userId: id }, (err, data) => {
+exports.findUser = (id, callback) => {
+  UserModel.find({ _id: id }, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
@@ -92,7 +92,7 @@ const findUser = (id, callback) => {
   // .limit(5)
 };
 
-const findThread = (id, callback) => {
+exports.findThread = (id, callback) => {
   ThreadModel.find({ _id: id }, (err, data) => {
     if (err) {
       callback(err, null);
@@ -102,7 +102,7 @@ const findThread = (id, callback) => {
   });
 };
 
-const findComments = (id, callback) => {
+exports.findComments = (id, callback) => {
   CommentModel.find({ threadId: id }, (err, data) => {
     if (err) {
       callback(err, null);
@@ -111,6 +111,14 @@ const findComments = (id, callback) => {
     }
   });
 };
+
+//  Can be refactored
+exports.saveUser = saveUser;
+exports.saveThread = saveThread;
+exports.saveComment = saveComment;
+exports.findUser = findUser;
+exports.findThread = findThread;
+exports.findComments = findComments;
 
 // Search for thread, find thread by parameter
 // Search for thread by ID
