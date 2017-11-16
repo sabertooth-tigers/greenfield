@@ -16,23 +16,23 @@ const userSchema = mongoose.Schema({
   password: String,
   salt: String,
   email: String,
-  id: { type: String, index: { unique: true } },
+  userId: { type: String, index: { unique: true } },
 });
 
 const threadSchema = mongoose.Schema({
   // May not need unique
-  id: { type: String, index: { unique: true } },
+  threadId: { type: String, index: { unique: true } },
   creatorId: String,
   description: String,
   title: String,
   createdAt: Date,
-  // Vote pushed off
 });
 
 const commentSchema = mongoose.Schema({
   // May not need unique
-  id: { type: String, index: { unique: true } },
+  commentId: { type: String, index: { unique: true } },
   text: String,
+  threadId: String,
   userId: String,
   createdAt: Date,
   vote: Number,
@@ -51,7 +51,7 @@ const saveUser = (user) => {
     password: user.password,
     salt: user.salt,
     email: user.email,
-    id: user.id,
+    userId: user.id,
   });
 
   newUser.save((err) => { if (err) return err; return true; });
@@ -59,7 +59,7 @@ const saveUser = (user) => {
 
 const saveThread = (thread) => {
   const newThread = new ThreadModel({
-    id: thread.id,
+    threadId: thread.id,
     creatorId: thread.creator,
     description: thread.description,
     title: thread.title,
@@ -71,7 +71,7 @@ const saveThread = (thread) => {
 
 const saveComment = (comment) => {
   const newComment = new CommentModel({
-    id: comment.id,
+    commentId: comment.id,
     text: comment.text,
     userId: comment.userId,
     createdAt: comment.date,
@@ -80,3 +80,40 @@ const saveComment = (comment) => {
 
   newComment.save((err) => { if (err) return err; return true; });
 };
+
+// .sort({'date': 'descending'})
+
+const findUser = (id, callback) => {
+  UserModel.find({ userId: id }, (err, data) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, data);
+    }
+  });
+  // .limit(5)
+};
+
+const findThread = (id, callback) => {
+  ThreadModel.find({ threadId: id }, (err, data) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, data);
+    }
+  });
+};
+
+const findComments = (id, callback) => {
+  CommentModel.find({ threadId: id }, (err, data) => {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, data);
+    }
+  });
+};
+
+// Search for thread, find thread by parameter
+// Search for thread by ID
+//  Find all comments relating to thread by threadID findAll ({id: ___})
