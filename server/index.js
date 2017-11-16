@@ -21,20 +21,28 @@ app.get('/', (req, res) => {
   console.log('Now processing get from external source');
 });
 
-app.get('/Users', () => {
+app.get('/Users', (req, res) => {
   console.log('Now processing get for Users');
 });
 
-app.post('/Users', () => {
+app.post('/Users', (req, res) => {
   console.log('Now processing post for Users');
 });
 
-app.get('/Threads', () => {
+app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
 });
 
-app.post('/Threads', () => {
+app.post('/Threads', (req, res) => {
   console.log('Now processing post for Threads');
+});
+
+app.get('/Comments', (req, res) => {
+  console.log('Now processing get for Comments');
+});
+
+app.post('/Comments', (req, res) => {
+  console.log('Now processing post for Comments');
 });
 
 

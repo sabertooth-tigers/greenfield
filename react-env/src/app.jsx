@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
-import Home from './components/Home';
-import SignUp from './components/SignUp';
+import Home from './components/Home.jsx';
+import SignUp from './components/SignUp.jsx';
+import Login from './components/Login.jsx';
 // import $ from 'jquery';
 
 
@@ -35,6 +36,7 @@ const Main = () => (
   <Switch>
     <Route exact path="/" component={Home} />
     <Route path="/signup" component={SignUp} />
+    <Route path="/login" component={Login} />
   </Switch>
 );
 
