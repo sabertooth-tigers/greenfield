@@ -47,6 +47,7 @@ app.post('/Users', (req, res) => {
 });
 
 app.get('/email', (req, res) => {
+  console.log(req.query.email);
   db.findUserPromise({ email: req.query.email })
     .then((data) => {
       console.log(data);

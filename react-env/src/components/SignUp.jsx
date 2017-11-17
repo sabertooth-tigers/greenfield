@@ -1,9 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import $ from 'jquery';
 import EmailValidator from 'email-validator';
+import axios from 'axios';
 import UserAgreement from './UserAgreement';
-
 
 class SignUpForm extends React.Component {
   constructor() {
@@ -45,12 +44,39 @@ class SignUpForm extends React.Component {
   // will error and do nothing if passwords dont match
   // otherwise removes error (or doesnt really setstate if no error) and invokes post request
   submit() {
+    // all of the variables from emptyField to passwordNotLongEnough
+    // are conditionals for form validation, in particular order
+    // these are the conditions that they fulfill
+    // 1. All fields MUST be filled to sign up
+    // 2. email MUST be valid
+    // 3. passwords must be at least 8 characters long and must match
     const emptyField = !this.state.email || !this.state.username
     || !this.state.password || !this.state.confirmPassword;
     const invalidEmail = !EmailValidator.validate(this.state.email);
     const passwordsDontMatch = this.state.password !== this.state.confirmPassword;
     const passwordNotLongEnough = this.state.password.length < 8;
 
+    // these two objects are designed to make the axios requests much cleaner
+    // 1. entry is for the post request if the user trying to register isn't
+    //    attempting to use a duplicate email
+    // 2. query is for the GET request to check the db if said email exists
+
+    const entry = {
+      email: this.state.email,
+      username: this.state.username,
+      password: this.state.password,
+    };
+
+    const query = {
+      params: {
+        email: this.state.email,
+        username: this.state.username,
+      },
+    };
+
+    // form validation conditionals, meaningful names were used to ease with the reading
+    // else ifs were used to ensure that order matters in validating the form
+    // this is a filter to ensure the desired state of the form be met in perfect condition
     if (emptyField) {
       this.setState({ statusMessage: 'Please fill out all the required fields' });
     } else if (invalidEmail) {
@@ -60,27 +86,17 @@ class SignUpForm extends React.Component {
     } else if (passwordNotLongEnough) {
       this.setState({ statusMessage: 'Password must be at least 8 characters long' });
     } else {
-      $.ajax({
-        method: 'GET',
-        url: '/email',
-        data: {
-          email: this.state.email,
-          username: this.state.username,
-        },
-        success: (hasEmail) => {
+      // GET request to check for email, if email doesn't exist then register user
+      axios.get('/email', query)
+        .then((response) => {
+          const hasEmail = response.data;
           if (hasEmail) {
             this.setState({ statusMessage: 'This email already exists' });
           } else {
-            console.log('hellooooo');
             this.setState({ statusMessage: 'Account created' });
-            $.post('/Users', {
-              email: this.state.email,
-              username: this.state.username,
-              password: this.state.password,
-            });
+            axios.post('/Users', entry);
           }
-        },
-      });
+        });
     }
   }
 
