@@ -5,7 +5,6 @@ import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 
-
 const Header = () => (
   <nav>
     <div>
