@@ -1,0 +1,16 @@
+#UserAgreement > .container {
+  background: whitesmoke;
+  width: 70%;
+  padding: 25px 50px 50px 50px;
+  margin: 5% auto 0 auto;
+}
+
+#UserAgreement > .container > h1 {
+  text-align: center;
+}
+
+#UserAgreement > .container > .container-footer {
+  display: flex;
+  justify-content: space-around;
+  margin: 2% auto 0 auto;
+}

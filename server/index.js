@@ -46,6 +46,18 @@ app.post('/Users', (req, res) => {
     });
 });
 
+app.get('/email', (req, res) => {
+  db.findUserPromise({ email: req.query.email })
+    .then((data) => {
+      console.log(data);
+      if (data.length === 0) {
+        res.send(false);
+      } else {
+        res.send(true);
+      }
+    });
+});
+
 app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
 });

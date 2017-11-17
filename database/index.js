@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 //  You might have to clear your original test db or change this to a new database
 mongoose.connect('mongodb://localhost/test');
 const dbConnect = mongoose.connection;
+const Promise = require('bluebird');
+
 dbConnect.on('error', console.error.bind('Connection error'));
 dbConnect.once('open', () => {
   console.log('Successfully connected');
@@ -55,7 +57,7 @@ exports.saveUser = (user) => {
   newUser.save((err) => { if (err) return err; return true; });
 };
 
- exports.saveThread = (thread) => {
+exports.saveThread = (thread) => {
   const newThread = new ThreadModel({
     threadId: thread.id,
     creatorId: thread.creator,
@@ -81,8 +83,8 @@ exports.saveComment = (comment) => {
 
 // .sort({'date': 'descending'})
 
-exports.findUser = (id, callback) => {
-  UserModel.find({ _id: id }, (err, data) => {
+exports.findUser = (query, callback) => {
+  UserModel.find(query, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
@@ -91,6 +93,8 @@ exports.findUser = (id, callback) => {
   });
   // .limit(5)
 };
+
+exports.findUserPromise = Promise.promisify(exports.findUser);
 
 exports.findThread = (id, callback) => {
   ThreadModel.find({ _id: id }, (err, data) => {
