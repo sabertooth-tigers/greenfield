@@ -5,7 +5,7 @@ class Comment extends React.Component {
   constructor(props) {
     super(props);
 
-    // Expects ids to get passed down as props from parent components
+    //  Expects ids to get passed down as props from parent components
     this.state = {
       commentValue: '',
       userId: this.props.userId,
@@ -21,7 +21,7 @@ class Comment extends React.Component {
     this.setState({ commentValue: e.target.value });
   }
 
-  // I am assuming IDs get generated on the server...
+  //  I am assuming IDs get generated on the server...
   sendComment() {
     $.post('/Threads', {
       threadId: this.state.threadId,
