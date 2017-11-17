@@ -9,7 +9,11 @@
 }
 
 #SignUp > h2 {
+  margin: 20px auto 0 auto;
+}
+#SignUp > h2, #SignUp > p {
   text-align: center;
+  font-weight: 700;
 }
 
 #SignUp > button {
