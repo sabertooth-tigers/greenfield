@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       isLoggedIn: false,
@@ -20,7 +20,7 @@ class Header extends React.Component {
           {
             // Renders Link based on whether or not you're logged in
             // Ternary was used because logical operators aren't most favorable here
-            this.state.isLoggedIn ?
+            this.props.isLoggedIn ?
               // If already logged in
               <Link to="/logout">Logout </Link> :
               // If not logged in at all

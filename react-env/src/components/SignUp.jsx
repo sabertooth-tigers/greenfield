@@ -1,12 +1,12 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import EmailValidator from 'email-validator';
 import axios from 'axios';
 import UserAgreement from './UserAgreement';
 
 class SignUpForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       email: '',
@@ -15,6 +15,9 @@ class SignUpForm extends React.Component {
       confirmPassword: '',
       statusMessage: '',
     };
+
+    // checks if we still are in a session
+    this.props.auth();
 
     // this is here simply so i don't have to use .bind for every call. (also render looks cleaner)
     this.emailQuery = this.emailQuery.bind(this);
@@ -94,7 +97,10 @@ class SignUpForm extends React.Component {
             this.setState({ statusMessage: 'This email already exists' });
           } else {
             this.setState({ statusMessage: 'Account created' });
-            axios.post('/Users', entry);
+            axios.post('/Users', entry)
+              .then(() => {
+                this.props.auth();
+              });
           }
         });
     }
@@ -136,10 +142,16 @@ class SignUpForm extends React.Component {
 }
 
 
-const SignUp = () => (
+const SignUp = props => (
   <Switch>
     <Route exact path="/signup" component={UserAgreement} />
-    <Route path="/signup/form" component={SignUpForm} />
+    {props.isLoggedIn ?
+      (<Redirect to="/" />) :
+      (<Route
+        path="/signup/form"
+        render={() => (<SignUpForm auth={props.auth} />)}
+      />)
+    }
   </Switch>
 );
 

@@ -83,11 +83,10 @@ app.post('/Users', (req, res) => {
       console.log(err);
     }
     passport.authenticate('local')(req, res, () => {
-      console.log('you have registeredauthenticated');
+      console.log('you have registered and authenticated', user);
       res.end();
     });
   });
-
 });
 
 app.get('/email', (req, res) => {
