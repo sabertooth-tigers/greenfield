@@ -55,10 +55,7 @@ app.get('/', (req, res) => {
   console.log('Now processing get from external source');
 });
 
-// app.get('/Users', (req, res) => {
-//   console.log('Now processing get for Users');
 
-// });
 
 
 app.post('/logout', (req, res) => {
@@ -74,6 +71,11 @@ app.post('/login', passport.authenticate('local'), (req, res) => {
 
   res.end();
 });
+
+// app.get('/Users', (req, res) => {
+//   console.log('Now processing get for Users');
+
+// });
 
 app.post('/Users', (req, res) => {
   const model = {
@@ -96,14 +98,27 @@ app.post('/Users', (req, res) => {
 
 app.get('/email', (req, res) => {
   console.log(req.query.email);
+  let emailExists = false;
+  let userExists = false;
+
   db.findUserPromise({ email: req.query.email })
     .then((data) => {
-      console.log(data);
-      if (data.length === 0) {
-        res.send(false);
-      } else {
-        res.send(true);
+      if (data.length > 0) {
+        emailExists = true;
       }
+
+      return db.findUserPromise({ username: req.query.username });
+    })
+    .then((data) => {
+      console.log(data);
+      if (data.length > 0) {
+        userExists = true;
+      }
+
+      res.json({
+        email: emailExists,
+        username: userExists,
+      });
     });
 });
 

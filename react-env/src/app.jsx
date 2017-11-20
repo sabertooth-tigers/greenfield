@@ -60,7 +60,7 @@ const Main = props => (
       render={() => (<SignUp isLoggedIn={props.isLoggedIn} auth={props.authenticator} />)} 
     />
     <Route path="/login" component={Login} />
-    <Route path="/logout" component={Logout} />
+    <Route path="/logout" render={() => (<Logout auth={props.authenticator} />)} />
   </Switch>
 );
 

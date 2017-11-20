@@ -92,13 +92,20 @@ class SignUpForm extends React.Component {
       // GET request to check for email, if email doesn't exist then register user
       axios.get('/email', query)
         .then((response) => {
-          const hasEmail = response.data;
+          // credentials check part 2
+          // we're just making sure the email and username do not exist on the database
+          const hasEmail = response.data.email;
+          const hasUser = response.data.username;
           if (hasEmail) {
             this.setState({ statusMessage: 'This email already exists' });
+          } else if (hasUser) {
+            this.setState({ statusMessage: 'This username already exists' });
           } else {
             this.setState({ statusMessage: 'Account created' });
             axios.post('/Users', entry)
               .then(() => {
+                // by the time you get here, all credentials are correct and you should be
+                // logged in by then, this prop just changes the header to reflect as such
                 this.props.auth();
               });
           }
