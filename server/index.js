@@ -2,7 +2,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
+
+
+// Auth Packages
 const bcrypt = require('bcryptjs');
+const session = require('express-session');
+const passport = require('passport');
 // const Promise = require('bluebird'); // Probably won't be dealing with any promises
 
 const app = express();
@@ -10,6 +15,16 @@ const app = express();
 app.use(express.static(`${__dirname}/../react-env/dist`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+app.use(session({
+  secret: 'dasdasdsadasd',
+  resave: false,
+  saveUninitialized: true,
+  // cookie: { secure: true },
+}));
 
 app.get('/', (req, res) => {
   if (req.url !== '/') {
