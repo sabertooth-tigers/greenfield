@@ -5,6 +5,7 @@ import axios from 'axios';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import Logout from './components/Logout';
 import Header from './components/Header';
 
 const Footer = () => (
@@ -40,7 +41,6 @@ class App extends React.Component {
       });
   }
 
-
   render() {
     return (
       <div>
@@ -60,6 +60,7 @@ const Main = props => (
       render={() => (<SignUp isLoggedIn={props.isLoggedIn} auth={props.authenticator} />)} 
     />
     <Route path="/login" component={Login} />
+    <Route path="/logout" component={Logout} />
   </Switch>
 );
 

@@ -61,6 +61,11 @@ app.get('/', (req, res) => {
 // });
 
 
+app.post('/logout', (req, res) => {
+  req.logout();
+  res.end();
+});
+
 app.get('/login', (req, res) => {
   res.send(req.isAuthenticated());
 });
