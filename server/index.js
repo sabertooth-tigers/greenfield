@@ -1,10 +1,15 @@
+// ========================================
+// SERVER AND DATABASE INITIALIZED
+// ========================================
 
 const express = require('express');
 const bodyParser = require('body-parser');
 const db = require('../database/index.js');
 
+// ========================================
+// AUTHENTICATION PACKAGES
+// ========================================
 
-// Auth Packages
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const passport = require('passport');
@@ -15,9 +20,10 @@ const app = express();
 app.use(express.static(`${__dirname}/../react-env/dist`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 
+// =========================================
+// AUTHENTICATION MIDDLEWARE
+// =========================================
 
 app.use(session({
   secret: 'dasdasdsadasd',
@@ -25,6 +31,9 @@ app.use(session({
   saveUninitialized: true,
   // cookie: { secure: true },
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res) => {
   if (req.url !== '/') {
@@ -74,21 +83,21 @@ app.get('/email', (req, res) => {
     });
 });
 
-app.get('/Threads', (req, res) => {
-  console.log('Now processing get for Threads');
-});
+// app.get('/Threads', (req, res) => {
+//   console.log('Now processing get for Threads');
+// });
 
-app.post('/Threads', (req, res) => {
-  console.log('Now processing post for Threads');
-});
+// app.post('/Threads', (req, res) => {
+//   console.log('Now processing post for Threads');
+// });
 
-app.get('/Comments', (req, res) => {
-  console.log('Now processing get for Comments');
-});
+// app.get('/Comments', (req, res) => {
+//   console.log('Now processing get for Comments');
+// });
 
-app.post('/Comments', (req, res) => {
-  console.log('Now processing post for Comments');
-});
+// app.post('/Comments', (req, res) => {
+//   console.log('Now processing post for Comments');
+// });
 
 
 app.listen(process.env.PORT || 3000, (err) => {

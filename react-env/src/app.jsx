@@ -4,19 +4,8 @@ import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import Header from './components/Header';
 
-const Header = () => (
-  <nav>
-    <div>
-      <Link to="/">Home</Link>
-    </div>
-    <div>
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Sign Up</Link>
-    </div>
-  </nav>
-
-);
 
 const Footer = () => (
   <div>
