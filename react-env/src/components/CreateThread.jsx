@@ -21,10 +21,10 @@ class CreateThread extends React.Component {
   submitThread(e) {
     e.preventDefault();
     axios.post('/Threads', {
-      creatorId: this.state.username,
+      creator: this.state.username,
       description: this.state.threadDescription,
       title: this.state.threadTitle,
-      createdAt: Date.now(),
+      date: Date.now(),
     })
       .then(() => {
         this.setState({ isFormSubmitted: true });

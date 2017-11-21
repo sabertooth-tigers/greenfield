@@ -65,6 +65,20 @@ app.get('/Threads', (req, res) => {
 
 app.post('/Threads', (req, res) => {
   console.log('Now processing post for Threads');
+  return new Promise((resolve, reject) => {
+    if (req.body) {
+      resolve(db.saveThread(req.body));
+    } else {
+      reject();
+    }
+  })
+    .then(() => {
+      res.send();
+    })
+    .catch((reason) => {
+      console.error(reason);
+      res.statusCode(500).end();
+    });
 });
 
 app.get('/Comments', (req, res) => {
@@ -73,6 +87,20 @@ app.get('/Comments', (req, res) => {
 
 app.post('/Comments', (req, res) => {
   console.log('Now processing post for Comments');
+  return new Promise((resolve, reject) => {
+    if (req.body) {
+      resolve(db.saveComment(req.body));
+    } else {
+      reject();
+    }
+  })
+    .then(() => {
+      res.send();
+    })
+    .catch((reason) => {
+      console.error(reason);
+      res.statusCode(500).end();
+    });
 });
 
 
