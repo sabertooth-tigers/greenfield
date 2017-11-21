@@ -24,7 +24,7 @@ class CreateThread extends React.Component {
       creatorId: this.state.username,
       description: this.state.threadDescription,
       title: this.state.threadTitle,
-      createdAt: Date.now()
+      createdAt: Date.now(),
     })
       .then(() => {
         this.setState({ isFormSubmitted: true });
@@ -51,12 +51,12 @@ class CreateThread extends React.Component {
           <input
             value={this.state.threadTitle}
             name="threadTitle"
-            onChange={this.handleInputChange} 
+            onChange={this.handleInputChange}
           />
           <input
             value={this.state.threadDescription}
             name="threadDescription"
-            onChange={this.handleInputChange} 
+            onChange={this.handleInputChange}
           />
           <button type="submit">
             Create thread
