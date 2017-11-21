@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
+import PropTypes from 'prop-types';
 
 class CreateThread extends React.Component {
   constructor(props) {
@@ -20,12 +21,13 @@ class CreateThread extends React.Component {
 
   submitThread(e) {
     e.preventDefault();
-    axios.post('/Threads', {
-      creator: this.state.username,
-      description: this.state.threadDescription,
-      title: this.state.threadTitle,
-      date: Date.now(),
-    })
+    axios
+      .post('/Threads', {
+        creator: this.state.username,
+        description: this.state.threadDescription,
+        title: this.state.threadTitle,
+        date: Date.now(),
+      })
       .then(() => {
         this.setState({ isFormSubmitted: true });
       })
@@ -66,5 +68,9 @@ class CreateThread extends React.Component {
     );
   }
 }
+
+CreateThread.propTypes = {
+  username: PropTypes.string.isRequired,
+};
 
 export default CreateThread;

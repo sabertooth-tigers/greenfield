@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-class Comment extends React.Component {
+class CreateComment extends React.Component {
   constructor(props) {
     super(props);
 
@@ -23,13 +24,14 @@ class Comment extends React.Component {
 
   //  I am assuming IDs get generated on the server...
   sendComment() {
-    axios.post('/Comments', {
-      threadId: this.state.threadId,
-      text: this.state.commentValue,
-      username: this.state.username,
-      date: Date.now(),
-      vote: this.state.vote,
-    })
+    axios
+      .post('/Comments', {
+        threadId: this.state.threadId,
+        text: this.state.commentValue,
+        username: this.state.username,
+        date: Date.now(),
+        vote: this.state.vote,
+      })
       .then(() => {
         this.setState({ commentValue: '' });
       })
@@ -40,7 +42,7 @@ class Comment extends React.Component {
 
   render() {
     return (
-      <div id="Comment">
+      <div id="CreateComment">
         <input type="text" value={this.state.commentValue} />
         <button onClick={this.sendComment} />
       </div>
@@ -48,4 +50,9 @@ class Comment extends React.Component {
   }
 }
 
-export default Comment;
+CreateComment.propTypes = {
+  username: PropTypes.string.isRequired,
+  threadId: PropTypes.string.isRequired,
+};
+
+export default CreateComment;
