@@ -27,7 +27,7 @@ class Comment extends React.Component {
       threadId: this.state.threadId,
       text: this.state.commentValue,
       username: this.state.username,
-      createdAt: Date.now(),
+      date: Date.now(),
       vote: this.state.vote,
     })
       .then(() => {
