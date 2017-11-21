@@ -1,5 +1,5 @@
 import React from 'react';
-import $ from 'jquery';
+import axios from 'axios';
 
 class Comment extends React.Component {
   constructor(props) {
@@ -8,7 +8,7 @@ class Comment extends React.Component {
     //  Expects ids to get passed down as props from parent components
     this.state = {
       commentValue: '',
-      userId: this.props.userId,
+      username: this.props.username,
       threadId: this.props.threadId,
       vote: 0,
     };
@@ -23,15 +23,18 @@ class Comment extends React.Component {
 
   //  I am assuming IDs get generated on the server...
   sendComment() {
-    $.post('/Threads', {
+    axios.post('/Comments', {
       threadId: this.state.threadId,
       text: this.state.commentValue,
-      userId: this.state.userId,
+      username: this.state.username,
       createdAt: Date.now(),
       vote: this.state.vote,
     })
-      .done(() => {
+      .then(() => {
         this.setState({ commentValue: '' });
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 
@@ -44,3 +47,5 @@ class Comment extends React.Component {
     );
   }
 }
+
+export default Comment;
