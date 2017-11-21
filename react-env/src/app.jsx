@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Link } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Header from './components/Header';
+
 
 const Footer = () => (
   <div>
@@ -28,6 +30,7 @@ class App extends React.Component {
 
     this.state = {
       isLoggedIn: false,
+      user: null,
     };
 
     this.authenticator();
@@ -37,14 +40,14 @@ class App extends React.Component {
   authenticator() {
     axios.get('/login')
       .then((res) => {
-        this.setState({ isLoggedIn: res.data });
+        this.setState(res.data);
       });
   }
 
   render() {
     return (
       <div>
-        <Header isLoggedIn={this.state.isLoggedIn} />
+        <Header user={this.state.user} isLoggedIn={this.state.isLoggedIn} />
         <Main isLoggedIn={this.state.isLoggedIn} authenticator={this.authenticator} />
         <Footer />
       </div>
@@ -70,5 +73,3 @@ ReactDOM.render(
   </HashRouter>
   , document.getElementById('root'),
 );
-
-// app will have header and main

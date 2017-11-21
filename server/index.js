@@ -29,7 +29,7 @@ app.use(session({
   secret: 'dasdasdsadasd',
   resave: false,
   saveUninitialized: true,
-  // cookie: { secure: true },
+  cookie: { maxAge: 60000 },
 }));
 
 app.use(passport.initialize());
@@ -40,8 +40,9 @@ passport.use(new LocalStrategy(db.UserModel.authenticate()));
 passport.serializeUser(db.UserModel.serializeUser());
 passport.deserializeUser(db.UserModel.deserializeUser());
 
+
 // ========================================
-// ROUTES
+// OTHER ROUTES
 // ========================================
 app.get('/', (req, res) => {
   if (req.url !== '/') {
@@ -56,16 +57,51 @@ app.get('/', (req, res) => {
 });
 
 
+// app.get('/Threads', (req, res) => {
+//   console.log('Now processing get for Threads');
+// });
+
+// app.post('/Threads', (req, res) => {
+//   console.log('Now processing post for Threads');
+// });
+
+// app.get('/Comments', (req, res) => {
+//   console.log('Now processing get for Comments');
+// });
+
+// app.post('/Comments', (req, res) => {
+//   console.log('Now processing post for Comments');
+// });
+
+// ========================================
+// AUTHENTICATION ROUTES
+// ========================================
 
 
+// Simple logout call
 app.post('/logout', (req, res) => {
   req.logout();
   res.end();
 });
 
+// The route called by props.auth / this.props authenticator clientside
+// This is simply to check if there is a session in place
 app.get('/login', (req, res) => {
-  res.send(req.isAuthenticated());
+  console.log(req);
+  const isLoggedIn = req.isAuthenticated();
+  let result = {};
+
+  if (isLoggedIn) {
+    result.user = req.user;
+  }
+
+  result.isLoggedIn = isLoggedIn;
+
+  res.json(result);
 });
+
+
+// TODO: make this work with Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
   res.send(req.isAuthenticated());
 
@@ -76,6 +112,9 @@ app.post('/login', passport.authenticate('local'), (req, res) => {
 //   console.log('Now processing get for Users');
 
 // });
+
+
+// The sign up route,
 
 app.post('/Users', (req, res) => {
   const model = {
@@ -122,23 +161,9 @@ app.get('/email', (req, res) => {
     });
 });
 
-// app.get('/Threads', (req, res) => {
-//   console.log('Now processing get for Threads');
-// });
-
-// app.post('/Threads', (req, res) => {
-//   console.log('Now processing post for Threads');
-// });
-
-// app.get('/Comments', (req, res) => {
-//   console.log('Now processing get for Comments');
-// });
-
-// app.post('/Comments', (req, res) => {
-//   console.log('Now processing post for Comments');
-// });
-
-
+// ===============================
+// LISTENER
+// ===============================
 app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     throw Error(err);
