@@ -1,0 +1,15 @@
+#list {
+	max-width: 280px;
+	height: 85vh;
+	background: whitesmoke;
+	padding: 10px 30px 10px 30px;
+}
+
+#list > h2 {
+	text-align: center;
+}
+
+#list .title {
+	font-size: 22px;
+	font-weight: 700;
+}

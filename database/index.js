@@ -1,4 +1,10 @@
 const mongoose = require('mongoose');
+
+// this is a package that integrates passports essential functions for auth within
+// the model.method object in a given schema
+
+const passportLocalMongoose = require('passport-local-mongoose');
+
 //  You might have to clear your original test db or change this to a new database
 mongoose.connect('mongodb://localhost/test');
 const dbConnect = mongoose.connection;
@@ -20,6 +26,8 @@ const userSchema = mongoose.Schema({
   email: String,
 });
 
+userSchema.plugin(passportLocalMongoose);
+
 const threadSchema = mongoose.Schema({
   // May not need unique
   // threadId: { type: String, index: { unique: true } },
@@ -39,13 +47,13 @@ const commentSchema = mongoose.Schema({
 });
 
 //  constructor
-const UserModel = mongoose.model('UserModel', userSchema);
+exports.UserModel = mongoose.model('UserModel', userSchema);
 const ThreadModel = mongoose.model('ThreadModel', threadSchema);
 const CommentModel = mongoose.model('CommentModel', commentSchema);
 
 // Do we need to return for save?
 exports.saveUser = (user) => {
-  const newUser = new UserModel({
+  const newUser = new exports.UserModel({
     role: user.role,
     username: user.username,
     password: user.password,
@@ -84,7 +92,7 @@ exports.saveComment = (comment) => {
 // .sort({'date': 'descending'})
 
 exports.findUser = (query, callback) => {
-  UserModel.find(query, (err, data) => {
+  exports.UserModel.find(query, (err, data) => {
     if (err) {
       callback(err, null);
     } else {

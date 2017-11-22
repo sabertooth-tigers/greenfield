@@ -1,10 +1,6 @@
 import React from 'react';
+import List from './List';
 
-const List = () => (
-  <div className="list">
-    This is the list component
-  </div>
-);
 
 const Entry = () => (
   <div className="entry">
@@ -18,9 +14,10 @@ const Entry = () => (
   </div>
 );
 
-const Home = () => (
+const Home = (props) => (
   <div id="home">
-    <List />
+    {console.log('hello world', props.state.threads)}
+    <List threads={props.state.threads} />
     <Entry />
   </div>
 );
