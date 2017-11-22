@@ -29,7 +29,7 @@ app.use(session({
   secret: 'dasdasdsadasd',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 },
+  cookie: { maxAge: 60 * 60000 }, // one hour
 }));
 
 app.use(passport.initialize());
@@ -87,9 +87,8 @@ app.post('/logout', (req, res) => {
 // The route called by props.auth / this.props authenticator clientside
 // This is simply to check if there is a session in place
 app.get('/login', (req, res) => {
-  console.log(req);
   const isLoggedIn = req.isAuthenticated();
-  let result = {};
+  const result = {};
 
   if (isLoggedIn) {
     result.user = req.user;
@@ -103,7 +102,7 @@ app.get('/login', (req, res) => {
 
 // TODO: make this work with Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  res.send(req.isAuthenticated());
+  console.log(req.isAuthenticated());
 
   res.end();
 });

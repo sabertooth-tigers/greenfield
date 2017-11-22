@@ -14,8 +14,8 @@ const Header = props => (
         props.isLoggedIn ?
           // If already logged in
           <div>
-            <span>{'Logged in as: ' + props.user.username + ' ID: ' + props.user._id}</span>
-          	<Link to="/logout"> Logout </Link> 
+            <span>{`Logged in as: ${props.user.username} ID: ${props.user._id}`}</span>
+            <Link to="/logout"> Logout </Link>
           </div>
           :
           // If not logged in at all

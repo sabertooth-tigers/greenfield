@@ -151,15 +151,25 @@ class SignUpForm extends React.Component {
 
 const SignUp = props => (
   <Switch>
-    <Route exact path="/signup" component={UserAgreement} />
-    {props.isLoggedIn ?
-      (<Redirect to="/" />) :
-      (<Route
-        path="/signup/form"
-        render={() => (<SignUpForm auth={props.auth} />)}
-      />)
-    }
+    <Route exact path="/signup" render={() => (<SignUpBranch state={props} />)} />
+    <Route path="/signup/form" render={() => (<SignUpBranch method="form" state={props} />)} />
   </Switch>
 );
+
+// ==========================
+// CONDITIONAL COMPONENTS
+// ==========================
+
+const SignUpBranch = (props) => {
+  if (props.state.isLoggedIn) {
+    return <Redirect to="/" />;
+  }
+
+  if (props.method === 'form') {
+    return <SignUpForm auth={props.state.authenticator} />;
+  }
+
+  return <UserAgreement />;
+};
 
 export default SignUp;

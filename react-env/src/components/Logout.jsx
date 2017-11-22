@@ -2,8 +2,12 @@ import React from 'react';
 import axios from 'axios';
 
 const Logout = (props) => {
-  axios.post('/logout');
-  props.auth();
+  axios.post('/logout')
+    .then(() => {
+      console.log('logout successful');
+      props.auth();
+    });
+
 
   return (
     <div>

@@ -1,6 +1,8 @@
 body {
   background-color: #d3d3d3;
   height: 100%;
+  width: 99.2%;
+  overflow-x: hidden;
 }
 
 nav {
