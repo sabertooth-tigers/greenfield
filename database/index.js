@@ -79,11 +79,12 @@ exports.saveThread = (thread) => {
 
 exports.saveComment = (comment) => {
   const newComment = new CommentModel({
+    threadId: comment.threadId,
     commentId: comment.id,
     text: comment.text,
-    userId: comment.userId,
+    userId: comment.username,
     createdAt: comment.date,
-    vote: Number,
+    vote: comment.vote,
   });
 
   newComment.save((err) => { if (err) return err; return true; });
@@ -123,6 +124,8 @@ exports.findComments = (id, callback) => {
     }
   });
 };
+
+exports.findCommentsPromise = Promise.promisify(exports.findComments);
 
 //  Can be refactored
 

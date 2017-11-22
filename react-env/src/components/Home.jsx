@@ -1,20 +1,9 @@
 import React from 'react';
 import List from './List';
+import Entry from './Entry';
 
 
-const Entry = () => (
-  <div className="entry">
-    This is the entry component
-    <div>
-        problems
-    </div>
-    <div>
-      topics
-    </div>
-  </div>
-);
-
-const Home = (props) => (
+const Home = () => (
   <div id="home">
     {console.log('hello world', props.state.threads)}
     <List threads={props.state.threads} />
