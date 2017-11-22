@@ -16,7 +16,7 @@ const ViewThread = ({ thread, username, comments }) => {
   ));
   return (
     <div>
-      <CreateComment username={username} />
+      <CreateComment username={username} threadId={thread.threadId} />
       <div>{thread.creatorId}</div>
       <div>{thread.createdAt}</div>
       <div>{thread.title}</div>
