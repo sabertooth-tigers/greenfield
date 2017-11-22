@@ -5,6 +5,9 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  height: 100vh;
+}
 nav {
 	display: flex;
 	justify-content: space-between;
@@ -13,10 +16,6 @@ nav {
 	margin: -7px -7px 7px -7px;
 }
 
-.list {
-	height: 500px;
-	background: whitesmoke;
-}
 
 .entry {
 	height: 500px;
