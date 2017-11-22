@@ -18,7 +18,7 @@ const Entry = () => (
   </div>
 );
 
-const Home = () => (
+const Home = (props) => (
   <div id="home">
     <List />
     <Entry />

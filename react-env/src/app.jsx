@@ -8,7 +8,7 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Header from './components/Header';
-
+import fakeThreadData from '../../fakeThreadsData';
 
 const Footer = () => (
   <div>
@@ -31,6 +31,12 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       user: null,
+      threads: fakeThreadData, // is an Array
+      // NOTE: authenticator is NOT a state
+      // the reason why i put this here is to make it easier to pass props
+      // and make it look cleaner on the components
+      // thanks -justin
+      authenticator: this.authenticator.bind(this),
     };
 
     this.authenticator();
@@ -50,7 +56,7 @@ class App extends React.Component {
     return (
       <div>
         <Header user={this.state.user} isLoggedIn={this.state.isLoggedIn} />
-        <Main isLoggedIn={this.state.isLoggedIn} authenticator={this.authenticator} />
+        <Main state={this.state} />
         <Footer />
       </div>
     );
@@ -60,13 +66,10 @@ class App extends React.Component {
 
 const Main = props => (
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route
-      path="/signup"
-      render={() => (<SignUp state={props} />)}
-    />
-    <Route path="/login" render={() => (<LoginWithCheck state={props} />)} />
-    <Route path="/logout" render={() => (<Logout auth={props.authenticator} />)} />
+    <Route exact path="/" render={() => <Home state={props.state} />} />
+    <Route path="/signup" render={() => (<SignUp state={props.state} />)} />
+    <Route path="/login" render={() => (<LoginWithCheck state={props.state} />)} />
+    <Route path="/logout" render={() => (<Logout auth={props.state.authenticator} />)} />
   </Switch>
 );
 
