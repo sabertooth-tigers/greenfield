@@ -9,7 +9,6 @@ class CreateThread extends React.Component {
     //  Expects username to be handed down from props
     //  Added flag to state that flips upon form submission
     this.state = {
-      username: this.props.username,
       threadTitle: '1-line summary of your problem',
       threadDescription: 'Please provide more details here',
       isFormSubmitted: false,
@@ -23,17 +22,13 @@ class CreateThread extends React.Component {
     e.preventDefault();
     axios
       .post('/Threads', {
-        creator: this.state.username,
+        creator: this.props.username,
         description: this.state.threadDescription,
         title: this.state.threadTitle,
         date: Date.now(),
       })
-      .then(() => {
-        this.setState({ isFormSubmitted: true });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      .then(() => this.setState({ isFormSubmitted: true }))
+      .catch(err => console.error(err));
   }
   //  One method that dynamically handles multiple input forms, depending on their name attribute
   handleInputChange(e) {

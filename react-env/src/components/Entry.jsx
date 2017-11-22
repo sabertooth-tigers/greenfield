@@ -20,12 +20,8 @@ class Entry extends React.Component {
   componentDidMount() {
     axios
       .get(`/Comments?threadId=${this.props.thread.threadId}`)
-      .then((comments) => {
-        this.setState({ threadComments: comments });
-      })
-      .catch((reason) => {
-        console.error(reason);
-      });
+      .then(comments => this.setState({ threadComments: comments }))
+      .catch(reason => console.error(reason));
   }
 
   toggleCreateThread() {

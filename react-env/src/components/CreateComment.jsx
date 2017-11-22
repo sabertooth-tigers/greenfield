@@ -6,12 +6,8 @@ class CreateComment extends React.Component {
   constructor(props) {
     super(props);
 
-    //  Expects ids to get passed down as props from parent components
     this.state = {
       commentValue: '',
-      username: this.props.username,
-      threadId: this.props.threadId,
-      vote: 0,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -22,22 +18,18 @@ class CreateComment extends React.Component {
     this.setState({ commentValue: e.target.value });
   }
 
-  //  I am assuming IDs get generated on the server...
+  //  TODO: modify post so that Entry re-renders newly created comment.
   sendComment() {
     axios
       .post('/Comments', {
-        threadId: this.state.threadId,
+        threadId: this.props.threadId,
         text: this.state.commentValue,
-        username: this.state.username,
+        username: this.props.username,
         date: Date.now(),
-        vote: this.state.vote,
+        vote: 0,
       })
-      .then(() => {
-        this.setState({ commentValue: '' });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+      .then(() => this.setState({ commentValue: '' }))
+      .catch(err => console.error(err));
   }
 
   render() {
@@ -52,7 +44,7 @@ class CreateComment extends React.Component {
 
 CreateComment.propTypes = {
   username: PropTypes.string.isRequired,
-  threadId: PropTypes.string.isRequired,
+  threadId: PropTypes.number.isRequired,
 };
 
 export default CreateComment;

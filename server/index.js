@@ -73,9 +73,7 @@ app.post('/Threads', (req, res) => {
       reject();
     }
   })
-    .then(() => {
-      res.send();
-    })
+    .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
       res.statusCode(500).end();
@@ -88,9 +86,7 @@ app.get('/Comments', (req, res) => {
   const parentThreadId = req.query.threadId;
   db
     .findCommentsPromise(parentThreadId)
-    .then((results) => {
-      res.send(results);
-    })
+    .then(results => res.send(results))
     .catch((reason) => {
       console.error(reason);
       res.statusCode(500).end();
@@ -107,9 +103,7 @@ app.post('/Comments', (req, res) => {
       reject();
     }
   })
-    .then(() => {
-      res.send();
-    })
+    .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
       res.statusCode(500).end();
