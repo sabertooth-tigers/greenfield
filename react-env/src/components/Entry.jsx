@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CreateThread from './CreateThread';
@@ -9,9 +10,22 @@ class Entry extends React.Component {
     super(props);
     this.state = {
       isCreateThreadDisplayed: false,
+      threadComments: [],
     };
 
     this.toggleCreateThread = this.toggleCreateThread.bind(this);
+  }
+
+  //  For the selected thread, fetch an array of associated comments.
+  componentDidMount() {
+    axios
+      .get(`/Comments?threadId=${this.props.thread.threadId}`)
+      .then((comments) => {
+        this.setState({ threadComments: comments });
+      })
+      .catch((reason) => {
+        console.error(reason);
+      });
   }
 
   toggleCreateThread() {
@@ -31,7 +45,7 @@ class Entry extends React.Component {
     }
     return (
       <div>
-        <ViewThread username={username} thread={thread} />
+        <ViewThread username={username} thread={thread} comments={this.state.threadComments} />
         <button onClick={this.toggleCreateThread}>
           {buttonLabel}
         </button>
@@ -41,8 +55,10 @@ class Entry extends React.Component {
   }
 }
 
+//  Not sure about mongoose threadId type (assuming number for now)
 Entry.propTypes = {
   thread: PropTypes.shape({
+    threadId: PropTypes.number.isRequired,
     creatorId: PropTypes.string.isRequired,
     description: PropTypes.string,
     title: PropTypes.string.isRequired,
@@ -53,6 +69,7 @@ Entry.propTypes = {
 
 Entry.defaultProps = {
   thread: {
+    threadId: 999999999,
     creatorId: 'A. Nonymous',
     description: 'Explain all your problems in a new thread...',
     title: 'There are no problems in the world!',

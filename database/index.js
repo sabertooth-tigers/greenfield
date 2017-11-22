@@ -117,6 +117,8 @@ exports.findComments = (id, callback) => {
   });
 };
 
+exports.findCommentsPromise = Promise.promisify(exports.findComments);
+
 //  Can be refactored
 
 

@@ -63,6 +63,7 @@ app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
 });
 
+//  Handles newly created threads.
 app.post('/Threads', (req, res) => {
   console.log('Now processing post for Threads');
   return new Promise((resolve, reject) => {
@@ -81,10 +82,22 @@ app.post('/Threads', (req, res) => {
     });
 });
 
+//  When a thread is selected on the client, it fetches associated comments through here.
 app.get('/Comments', (req, res) => {
   console.log('Now processing get for Comments');
+  const parentThreadId = req.query.threadId;
+  db
+    .findCommentsPromise(parentThreadId)
+    .then((results) => {
+      res.send(results);
+    })
+    .catch((reason) => {
+      console.error(reason);
+      res.statusCode(500).end();
+    });
 });
 
+// Handles newly posted comments.
 app.post('/Comments', (req, res) => {
   console.log('Now processing post for Comments');
   return new Promise((resolve, reject) => {
