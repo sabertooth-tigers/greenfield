@@ -15,7 +15,7 @@ const ThreadComment = ({
 
 ThreadComment.propTypes = {
   creator: PropTypes.string,
-  createdAt: PropTypes.object,
+  createdAt: PropTypes.instanceOf(Date),
   vote: PropTypes.number,
   text: PropTypes.string,
 };
