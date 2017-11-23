@@ -39,8 +39,7 @@ class App extends React.Component {
       authenticator: this.authenticator.bind(this),
     };
 
-    this.authenticator();
-    this.authenticator = this.authenticator.bind(this);
+    this.state.authenticator();
   }
 
   authenticator() {
@@ -87,6 +86,19 @@ const LoginWithCheck = (props) => {
   return <Login auth={props.state.authenticator} />;
 };
 
+LoginWithCheck.defaultProps = {
+  state: {
+    isLoggedIn: false,
+    authenticator: undefined,
+  },
+};
+
+LoginWithCheck.propTypes = {
+  state: PropTypes.shape({
+    isLoggedIn: PropTypes.bool.isRequired,
+    authenticator: PropTypes.func,
+  }),
+};
 
 ReactDOM.render(
   <HashRouter>

@@ -3,11 +3,11 @@ import List from './List';
 import Entry from './Entry';
 
 
-const Home = () => (
+const Home = (props) => (
   <div id="home">
     {console.log('hello world', props.state.threads)}
     <List threads={props.state.threads} />
-    <Entry />
+    <Entry username="hello world" thread={props.state.threads[0]} />
   </div>
 );
 

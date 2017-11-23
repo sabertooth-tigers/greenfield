@@ -7,7 +7,6 @@ const ThreadComment = ({
 }) => (
   <div>
     <div>{creator}</div>
-    <div>{createdAt}</div>
     <div>{vote}</div>
     <div>{text}</div>
   </div>
