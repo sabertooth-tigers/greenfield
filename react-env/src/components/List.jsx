@@ -26,12 +26,10 @@ const List = ({ threads }) => (
 // ======================================
 
 List.defaultProps = {
-  threads: {},
+  threads: [],
 };
 
 List.propTypes = {
-  threads: PropTypes.shape({
-    id: PropTypes.string,
-  }),
+  threads: PropTypes.arrayOf(PropTypes.object),
 };
 export default List;

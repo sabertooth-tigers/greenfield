@@ -7,7 +7,6 @@ class Logout extends React.Component {
     super({ auth });
     axios.post('/logout')
       .then(() => {
-        console.log('logout successful');
         auth();
       });
   }

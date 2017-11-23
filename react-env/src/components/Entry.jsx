@@ -7,7 +7,7 @@ import ViewThread from './ViewThread';
 //  Contains the CreateThread button, that conditionally shows the CreateThread component.
 
 const fakeComment = {
-  userId: 2313123213213,
+  userId: '2313123213213',
   createdAt: new Date(),
   vote: 0,
   text: 'hello world',
@@ -62,7 +62,7 @@ class Entry extends React.Component {
 //  Not sure about mongoose threadId type (assuming number for now)
 Entry.propTypes = {
   thread: PropTypes.shape({
-    threadId: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     creatorId: PropTypes.string.isRequired,
     description: PropTypes.string,
     title: PropTypes.string.isRequired,
@@ -73,7 +73,7 @@ Entry.propTypes = {
 
 Entry.defaultProps = {
   thread: {
-    threadId: 999999999,
+    _id: '999999999',
     creatorId: 'A. Nonymous',
     description: 'Explain all your problems in a new thread...',
     title: 'There are no problems in the world!',

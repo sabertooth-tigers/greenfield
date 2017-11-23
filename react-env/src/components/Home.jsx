@@ -6,8 +6,6 @@ import Entry from './Entry';
 
 const Home = ({ state }) => (
   <div id="home">
-    {console.log(state)}
-    {console.log('hello world', state.threads)}
     <List threads={state.threads} />
     <Entry username="hello world" thread={state.threads[0]} />
   </div>

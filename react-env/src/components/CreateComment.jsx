@@ -42,9 +42,13 @@ class CreateComment extends React.Component {
   }
 }
 
+// ================================
+// PROP TYPE VALIDATION
+// ================================
+
 CreateComment.propTypes = {
   username: PropTypes.string.isRequired,
-  threadId: PropTypes.number.isRequired,
+  threadId: PropTypes.string.isRequired,
 };
 
 export default CreateComment;

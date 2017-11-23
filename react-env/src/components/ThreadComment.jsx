@@ -6,8 +6,8 @@ const ThreadComment = ({
   creator, createdAt, vote, text,
 }) => (
   <div>
-    {console.log(createdAt())}
     <div>{creator}</div>
+    <div>{createdAt.toString()}</div>
     <div>{vote}</div>
     <div>{text}</div>
   </div>
@@ -15,7 +15,7 @@ const ThreadComment = ({
 
 ThreadComment.propTypes = {
   creator: PropTypes.string,
-  createdAt: PropTypes.instanceOf(Date),
+  createdAt: PropTypes.object,
   vote: PropTypes.number,
   text: PropTypes.string,
 };
