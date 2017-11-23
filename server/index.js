@@ -167,6 +167,7 @@ app.get('/email', (req, res) => {
 
 app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
+  res.end();
 });
 
 //  Handles newly created threads.
@@ -223,5 +224,5 @@ app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     throw Error(err);
   }
-console.log(`server has started on ${process.env.PORT || 3000}`);
+  console.log(`server has started on ${process.env.PORT || 3000}`);
 });

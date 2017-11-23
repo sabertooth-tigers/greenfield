@@ -6,6 +6,7 @@ const ThreadComment = ({
   creator, createdAt, vote, text,
 }) => (
   <div>
+    {console.log(createdAt())}
     <div>{creator}</div>
     <div>{vote}</div>
     <div>{text}</div>

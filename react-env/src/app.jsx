@@ -1,3 +1,5 @@
+/* eslint-env browser */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
@@ -31,17 +33,24 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       user: null,
-      threads: fakeThreadData, // is an Array
+      threads: [], // is an Array
       // NOTE: authenticator is NOT a state
       // the reason why i put this here is to make it easier to pass props
       // and make it look cleaner on the components
       // thanks -justin
       authenticator: this.authenticator.bind(this),
+
     };
 
     this.state.authenticator();
   }
 
+  componentWillMount() {
+    // this will be an axios invocation, but for now we use fake data
+    let threadArr = this.state.threads;
+    threadArr = fakeThreadData;
+    this.setState({ threads: threadArr });
+  }
   authenticator() {
     // checks if a session is actives
     // returns a user if session is active as well as confirming an active session
@@ -63,12 +72,12 @@ class App extends React.Component {
 }
 
 
-const Main = props => (
+const Main = ({ state }) => (
   <Switch>
-    <Route exact path="/" render={() => <Home state={props.state} />} />
-    <Route path="/signup" render={() => (<SignUp state={props.state} />)} />
-    <Route path="/login" render={() => (<LoginWithCheck state={props.state} />)} />
-    <Route path="/logout" render={() => (<Logout auth={props.state.authenticator} />)} />
+    <Route exact path="/" render={() => <Home state={state} />} />
+    <Route path="/signup" render={() => (<SignUp state={state} />)} />
+    <Route path="/login" render={() => (<LoginWithCheck state={state} />)} />
+    <Route path="/logout" render={() => (<Logout auth={state.authenticator} />)} />
   </Switch>
 );
 
@@ -78,18 +87,38 @@ const Main = props => (
 
 
 // This redirects us to home page if we try to access the login page when we're logged in
-const LoginWithCheck = (props) => {
-  if (props.state.isLoggedIn) {
+const LoginWithCheck = ({ state }) => {
+  if (state.isLoggedIn) {
     return <Redirect to="/" />;
   }
 
-  return <Login auth={props.state.authenticator} />;
+  return <Login auth={state.authenticator} />;
+};
+
+Main.defaultProps = {
+  state: {
+    isLoggedIn: false,
+    authenticator: undefined,
+    threads: [],
+    user: undefined,
+  },
+};
+
+Main.propTypes = {
+  state: PropTypes.shape({
+    isLoggedIn: PropTypes.bool.isRequired,
+    authenticator: PropTypes.func,
+    threads: PropTypes.array,
+    user: PropTypes.string,
+  }),
 };
 
 LoginWithCheck.defaultProps = {
   state: {
     isLoggedIn: false,
     authenticator: undefined,
+    threads: [],
+    user: undefined,
   },
 };
 
@@ -97,6 +126,8 @@ LoginWithCheck.propTypes = {
   state: PropTypes.shape({
     isLoggedIn: PropTypes.bool.isRequired,
     authenticator: PropTypes.func,
+    threads: PropTypes.array,
+    user: PropTypes.string,
   }),
 };
 
