@@ -1,19 +1,31 @@
 import React from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
-const Logout = (props) => {
-  axios.post('/logout')
-    .then(() => {
-      console.log('logout successful');
-      props.auth();
-    });
+class Logout extends React.Component {
+  constructor({ auth }) {
+    super({ auth });
+    axios.post('/logout')
+      .then(() => {
+        console.log('logout successful');
+        auth();
+      });
+  }
+  render() {
+    return (
+      <div>
+        <h1>You have successfully logged out</h1>
+      </div>
+    );
+  }
+}
 
+Logout.propTypes = {
+  auth: PropTypes.func,
+};
 
-  return (
-    <div>
-      <h1>You have successfully logged out</h1>
-    </div>
-  );
+Logout.defaultProps = {
+  auth: undefined,
 };
 
 export default Logout;
