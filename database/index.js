@@ -28,17 +28,20 @@ const userSchema = mongoose.Schema({
 
 userSchema.plugin(passportLocalMongoose);
 
-const threadSchema = mongoose.Schema({
-  // May not need unique
-  // threadId: { type: String, index: { unique: true } },
-  creatorId: String,
-  description: String,
-  title: String,
-  createdAt: Date,
-});
+const threadSchema = mongoose.Schema(
+  {
+    creatorId: String,
+    description: String,
+    title: String,
+    createdAt: Date,
+    views: { type: Number, default: 0 },
+  },
+  {
+    timestamps: true,
+  },
+);
 
 const commentSchema = mongoose.Schema({
-  // May not need unique
   text: String,
   threadId: String,
   userId: String,
@@ -66,13 +69,7 @@ exports.saveUser = (user) => {
 };
 
 exports.saveThread = (thread) => {
-  const newThread = new ThreadModel({
-    threadId: thread.id,
-    creatorId: thread.creator,
-    description: thread.description,
-    title: thread.title,
-    createdAt: thread.date,
-  });
+  const newThread = new ThreadModel(thread);
 
   newThread.save((err) => { if (err) return err; return true; });
 };
@@ -80,7 +77,6 @@ exports.saveThread = (thread) => {
 exports.saveComment = (comment) => {
   const newComment = new CommentModel({
     threadId: comment.threadId,
-    commentId: comment.id,
     text: comment.text,
     userId: comment.username,
     createdAt: comment.date,
@@ -105,8 +101,8 @@ exports.findUser = (query, callback) => {
 
 exports.findUserPromise = Promise.promisify(exports.findUser);
 
-exports.findThread = (id, callback) => {
-  ThreadModel.find({ _id: id }, (err, data) => {
+exports.findThread = (query, callback) => {
+  ThreadModel.find(query, (err, data) => {
     if (err) {
       callback(err, null);
     } else {
@@ -114,6 +110,8 @@ exports.findThread = (id, callback) => {
     }
   });
 };
+
+exports.findThreadPromise = Promise.promisify(exports.findThread);
 
 exports.findComments = (id, callback) => {
   CommentModel.find({ threadId: id }, (err, data) => {

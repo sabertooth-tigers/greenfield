@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 
 //  Need onclickHandler passed down from props
 //  ES6 destructuring attempt Might need to go back to props
-const ListEntry = ({ entry, id }) => (
+const ListEntry = ({ entry, onClickHandler }) => (
   <div className="thread-entry">
-    <div className="title"> {entry.title} </div>
-    <div> id: {id} </div>
-    <div> views: 9001 </div>
+    {/* eslint-disable */}
+    <div 
+      onClick={() => onClickHandler({ thread: entry })}
+      className="title"
+    >
+      {`${entry.title.slice(0, 21)}...`}
+    </div>
+    {/* eslint-enable */}
+    <div> views: {entry.views} </div>
   </div>
 );
 
@@ -19,13 +25,14 @@ ListEntry.defaultProps = {
   entry: {
     title: undefined,
   },
-  id: undefined,
+  onClickHandler: undefined,
 };
 
 ListEntry.propTypes = {
   entry: PropTypes.shape({
     title: PropTypes.string,
   }),
-  id: PropTypes.string,
+  onClickHandler: PropTypes.func,
 };
+
 export default ListEntry;

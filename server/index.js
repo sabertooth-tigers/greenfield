@@ -167,7 +167,10 @@ app.get('/email', (req, res) => {
 
 app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
-  res.end();
+  db.findThreadPromise({})
+    .then((data) => {
+      res.json(data);
+    });
 });
 
 //  Handles newly created threads.
