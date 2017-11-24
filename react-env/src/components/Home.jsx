@@ -11,6 +11,8 @@ class Home extends React.Component {
       thread: this.props.appState.threads[0],
     };
 
+    console.log(this.props.appState.threads);
+
     this.threadClick = this.threadClick.bind(this);
   }
 

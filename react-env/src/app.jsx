@@ -10,7 +10,6 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Header from './components/Header';
-import fakeThreadData from '../../fakeThreadsData';
 
 const Footer = () => (
   <div>
@@ -33,7 +32,7 @@ class App extends React.Component {
     this.state = {
       isLoggedIn: false,
       user: null,
-      threads: [], // is an Array
+      threads: [], // eslint-disable-line react/no-unused-state
       // NOTE: authenticator is NOT a state
       // the reason why i put this here is to make it easier to pass props
       // and make it look cleaner on the components
@@ -45,12 +44,12 @@ class App extends React.Component {
     this.state.authenticator();
   }
 
-  componentWillMount() {
+  componentDidUpdate() {
     // this will be an axios invocation, but for now we use fake data
 
     axios.get('/Threads')
       .then((res) => {
-        this.setState({ threads: res.data });
+        this.setState({ threads: res.data }); // eslint-disable-line react/no-unused-state
       });
   }
   authenticator() {

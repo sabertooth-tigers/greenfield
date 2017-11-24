@@ -31,9 +31,11 @@ const List = ({ threads, clickHandler }) => (
 
 List.defaultProps = {
   threads: [],
+  clickHandler: undefined,
 };
 
 List.propTypes = {
   threads: PropTypes.arrayOf(PropTypes.object),
+  clickHandler: PropTypes.func,
 };
 export default List;
