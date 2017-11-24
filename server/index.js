@@ -12,6 +12,11 @@ app.use(express.static(`${__dirname}/../react-env/dist`));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // ========================================
 // AUTHENTICATION PACKAGES
@@ -157,8 +162,12 @@ app.get('/email', (req, res) => {
         email: emailExists,
         username: userExists,
       });
+    });
+});
+
 app.get('/Threads', (req, res) => {
   console.log('Now processing get for Threads');
+  res.end();
 });
 
 //  Handles newly created threads.
@@ -215,5 +224,5 @@ app.listen(process.env.PORT || 3000, (err) => {
   if (err) {
     throw Error(err);
   }
-// console.log(`server has started on ${process.env.PORT || 3000}`);
+  console.log(`server has started on ${process.env.PORT || 3000}`);
 });

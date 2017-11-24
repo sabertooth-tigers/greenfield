@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -50,5 +51,17 @@ class Login extends React.Component {
     );
   }
 }
+
+// ======================
+// PROP TYPE VALIDATION
+// ======================
+
+Login.defaultProps = {
+  auth: undefined,
+};
+
+Login.propTypes = {
+  auth: PropTypes.func,
+};
 
 export default Login;

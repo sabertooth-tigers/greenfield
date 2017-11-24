@@ -47,6 +47,9 @@
   "pre-commit": [
     "lint"
   ],
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
   "author": "",
   "license": "ISC"
 }

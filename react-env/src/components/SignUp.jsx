@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import EmailValidator from 'email-validator';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import UserAgreement from './UserAgreement';
 
 class SignUpForm extends React.Component {
@@ -160,16 +161,44 @@ const SignUp = props => (
 // CONDITIONAL COMPONENTS
 // ==========================
 
-const SignUpBranch = (props) => {
-  if (props.state.isLoggedIn) {
+const SignUpBranch = ({ state, method }) => {
+  if (state.isLoggedIn) {
     return <Redirect to="/" />;
   }
 
-  if (props.method === 'form') {
-    return <SignUpForm auth={props.state.authenticator} />;
+  if (method === 'form') {
+    return <SignUpForm auth={state.authenticator} />;
   }
 
   return <UserAgreement />;
+};
+
+// ======================
+// PROP TYPE VALIDATION
+// ======================
+
+SignUpForm.defaultProps = {
+  auth: undefined,
+};
+
+SignUpForm.propTypes = {
+  auth: PropTypes.func,
+};
+
+SignUpBranch.defaultProps = {
+  state: {
+    isLoggedIn: false,
+    authenticator: false,
+  },
+  method: undefined,
+};
+
+SignUpBranch.propTypes = {
+  state: PropTypes.shape({
+    isLoggedIn: PropTypes.bool,
+    authenticator: PropTypes.func,
+  }),
+  method: PropTypes.bool,
 };
 
 export default SignUp;
