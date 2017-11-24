@@ -45,18 +45,22 @@ class CreateThread extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitThread}>
+          Enter thread title.
           <input
             type="textbox"
             value={this.state.threadTitle}
             name="threadTitle"
             onChange={this.handleInputChange}
           />
+          <br />
+          Enter thread description.
           <input
             type="textbox"
             value={this.state.threadDescription}
             name="threadDescription"
             onChange={this.handleInputChange}
           />
+          <br />
           <button type="submit">
             Create thread
           </button>

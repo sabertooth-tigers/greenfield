@@ -44,7 +44,7 @@ class App extends React.Component {
     this.state.authenticator();
   }
 
-  componentDidUpdate() {
+  componentDidMount() {
     // this will be an axios invocation, but for now we use fake data
 
     axios.get('/Threads')

@@ -24,7 +24,8 @@ const ViewThread = ({ username, thread, comments }) => (
           createdAt={comment.createdAt}
           vote={comment.vote}
           text={comment.text}
-        />))}
+        />))
+    }
   </div>
 );
 

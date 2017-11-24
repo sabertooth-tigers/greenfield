@@ -17,7 +17,7 @@ class Entry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isCreateThreadDisplayed: true,
+      isCreateThreadDisplayed: false,
       threadComments: [fakeComment],
     };
 
@@ -42,7 +42,7 @@ class Entry extends React.Component {
   render() {
     const { username, thread } = this.props;
     let buttonLabel = null;
-    if (this.state.isCreateThreadDisplayed) {
+    if (!this.state.isCreateThreadDisplayed) {
       buttonLabel = 'I have a problem';
     } else {
       buttonLabel = 'Never mind!';
@@ -50,10 +50,12 @@ class Entry extends React.Component {
     return (
       <div id="entry">
         <ViewThread username={username} thread={thread} comments={this.state.threadComments} />
+        <br />
+        <br />
         <button onClick={this.toggleCreateThread}>
           {buttonLabel}
         </button>
-        {!this.state.isCreateThreadDisplayed && <CreateThread username={username} />}
+        {this.state.isCreateThreadDisplayed && <CreateThread username={username} />}
       </div>
     );
   }
@@ -75,8 +77,8 @@ Entry.defaultProps = {
   thread: {
     _id: '999999999',
     creatorId: 'A. Nonymous',
-    description: 'Explain all your problems in a new thread...',
-    title: 'There are no problems in the world!',
+    description: 'This is a default thread description',
+    title: 'This is a default thread title',
     createdAt: new Date(),
   },
   username: undefined,
