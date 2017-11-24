@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 
 //  Need onclickHandler passed down from props
 //  ES6 destructuring attempt Might need to go back to props
-const ListEntry = ({ entry, id }) => (
+const ListEntry = ({ entry, onClickHandler }) => (
   <div className="thread-entry">
-    <div className="title"> {entry.title} </div>
-    <div> id: {id} </div>
-    <div> views: 9001 </div>
+    <div onClick={() => onClickHandler({ thread: entry })} className="title"> {`${entry.title.slice(0, 21)}...`} </div>
+    <div> views: {entry.views} </div>
   </div>
 );
 

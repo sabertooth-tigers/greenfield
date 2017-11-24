@@ -3,20 +3,38 @@ import PropTypes from 'prop-types';
 import List from './List';
 import Entry from './Entry';
 
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
 
-const Home = ({ state }) => (
-  <div id="home">
-    <List threads={state.threads} />
-    <Entry username="hello world" thread={state.threads[0]} />
-  </div>
-);
+    this.state = {
+      thread: this.props.appState.threads[0],
+    };
+
+    this.threadClick = this.threadClick.bind(this);
+  }
+
+  threadClick(threadObj) {
+    this.setState(threadObj);
+  }
+
+  render() {
+    return (
+      <div id="home">
+        <List clickHandler={this.threadClick} threads={this.props.appState.threads} />
+        <Entry username="hello world" thread={this.state.thread} />
+      </div>
+    );
+  }
+}
+
 
 // ======================
 // PROP TYPE VALIDATION
 // ======================
 
 Home.defaultProps = {
-  state: {
+  appState: {
     isLoggedIn: false,
     authenticator: undefined,
     threads: [],
@@ -25,7 +43,7 @@ Home.defaultProps = {
 };
 
 Home.propTypes = {
-  state: PropTypes.shape({
+  appState: PropTypes.shape({
     isLoggedIn: PropTypes.bool.isRequired,
     authenticator: PropTypes.func,
     threads: PropTypes.array,

@@ -36,7 +36,7 @@ class CreateComment extends React.Component {
     return (
       <div id="CreateComment">
         <input type="text" value={this.state.commentValue} />
-        <button onClick={this.sendComment} />
+        <button onClick={this.sendComment}>Submit</button>
       </div>
     );
   }

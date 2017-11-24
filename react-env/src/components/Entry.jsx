@@ -48,7 +48,7 @@ class Entry extends React.Component {
       buttonLabel = 'Never mind!';
     }
     return (
-      <div>
+      <div id="entry">
         <ViewThread username={username} thread={thread} comments={this.state.threadComments} />
         <button onClick={this.toggleCreateThread}>
           {buttonLabel}

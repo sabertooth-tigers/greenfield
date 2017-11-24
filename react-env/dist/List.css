@@ -1,8 +1,9 @@
 #list {
-	max-width: 280px;
+	width: 280px;
 	height: 85vh;
 	background: whitesmoke;
 	padding: 10px 30px 10px 30px;
+	overflow: scroll;
 }
 
 #list > h2 {
@@ -12,4 +13,8 @@
 #list .title {
 	font-size: 22px;
 	font-weight: 700;
+}
+
+#list .thread-entry {
+	cursor: pointer;
 }

@@ -10,10 +10,12 @@ import ThreadComment from './ThreadComment';
 
 const ViewThread = ({ username, thread, comments }) => (
   <div>
+    <div>
+      <div>{thread.creatorId}</div>
+      <h1>{thread.title}</h1>
+      <div>{thread.description}</div>
+    </div>
     <CreateComment username={username} threadId={thread._id} />
-    <div>{thread.creatorId}</div>
-    <div>{thread.title}</div>
-    <div>{thread.description}</div>
     {
       comments.map(comment =>
         (<ThreadComment

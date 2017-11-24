@@ -47,9 +47,11 @@ class App extends React.Component {
 
   componentWillMount() {
     // this will be an axios invocation, but for now we use fake data
-    let threadArr = this.state.threads;
-    threadArr = fakeThreadData;
-    this.setState({ threads: threadArr });
+
+    axios.get('/Threads')
+      .then((res) => {
+        this.setState({ threads: res.data });
+      });
   }
   authenticator() {
     // checks if a session is actives
@@ -74,7 +76,7 @@ class App extends React.Component {
 
 const Main = ({ state }) => (
   <Switch>
-    <Route exact path="/" render={() => <Home state={state} />} />
+    <Route exact path="/" render={() => <Home appState={state} />} />
     <Route path="/signup" render={() => (<SignUp state={state} />)} />
     <Route path="/login" render={() => (<LoginWithCheck state={state} />)} />
     <Route path="/logout" render={() => (<Logout auth={state.authenticator} />)} />
