@@ -28,7 +28,7 @@ class CreateComment extends React.Component {
         date: Date.now(),
         vote: 0,
       })
-      .then(() => this.setState({ commentValue: '' }))
+      .then(() => this.setState({ commentValue: '' }, () => { this.props.refreshComments() }))
       .catch(err => console.error(err));
   }
 
@@ -49,6 +49,7 @@ class CreateComment extends React.Component {
 CreateComment.propTypes = {
   username: PropTypes.string.isRequired,
   threadId: PropTypes.string.isRequired,
+  refreshComments: PropTypes.func.isRequired,
 };
 
 export default CreateComment;

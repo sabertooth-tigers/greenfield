@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
 import CreateThread from './CreateThread';
@@ -18,19 +18,31 @@ class Entry extends React.Component {
     super(props);
     this.state = {
       isCreateThreadDisplayed: false,
-      threadComments: [fakeComment],
+      threadComments: [],
     };
 
     this.toggleCreateThread = this.toggleCreateThread.bind(this);
+    this.refreshComments = this.refreshComments.bind(this);
   }
 
   //  For the selected thread, fetch an array of associated comments.
-  // componentDidMount() {
-  //   axios
-  //     .get(`/Comments?threadId=${this.props.thread.threadId}`)
-  //     .then(comments => this.setState({ threadComments: comments }))
-  //     .catch(reason => console.error(reason));
-  // }
+  componentDidMount() {
+    this.refreshComments();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.thread._id !== this.props.thread._id) {
+      this.refreshComments();
+    }
+  }
+
+
+  refreshComments() {
+    axios
+      .get(`/Comments?threadId=${this.props.thread._id}`)
+      .then(({ data }) => this.setState({ threadComments: data }))
+      .catch(reason => console.error(reason));
+  }
 
   toggleCreateThread() {
     this.setState({
@@ -47,9 +59,15 @@ class Entry extends React.Component {
     } else {
       buttonLabel = 'Never mind!';
     }
+    console.log('this.props.thread._ID: ', this.props.thread._id);
     return (
       <div id="entry">
-        <ViewThread username={username} thread={thread} comments={this.state.threadComments} />
+        <ViewThread
+          username={username}
+          thread={thread}
+          comments={this.state.threadComments}
+          refreshComments={this.refreshComments}
+        />
         <br />
         <br />
         <button onClick={this.toggleCreateThread}>
@@ -72,7 +90,7 @@ Entry.propTypes = {
     createdAt: PropTypes.instanceOf(Date).isRequired,
   }),
   username: PropTypes.string,
-  refreshData: () => {},
+  refreshData: PropTypes.func,
 };
 
 Entry.defaultProps = {
@@ -84,7 +102,7 @@ Entry.defaultProps = {
     createdAt: new Date(),
   },
   username: undefined,
-  refreshData: PropTypes.func,
+  refreshData: () => {},
 };
 
 
