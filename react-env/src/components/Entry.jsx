@@ -40,7 +40,7 @@ class Entry extends React.Component {
 
   //  Expects a single selected thread to be passed down from a collection.
   render() {
-    const { username, thread } = this.props;
+    const { username, thread, refreshData } = this.props;
     let buttonLabel = null;
     if (!this.state.isCreateThreadDisplayed) {
       buttonLabel = 'I have a problem';
@@ -55,7 +55,8 @@ class Entry extends React.Component {
         <button onClick={this.toggleCreateThread}>
           {buttonLabel}
         </button>
-        {this.state.isCreateThreadDisplayed && <CreateThread username={username} />}
+        {this.state.isCreateThreadDisplayed &&
+        <CreateThread username={username} refreshData={refreshData} />}
       </div>
     );
   }
@@ -71,6 +72,7 @@ Entry.propTypes = {
     createdAt: PropTypes.instanceOf(Date).isRequired,
   }),
   username: PropTypes.string,
+  refreshData: () => {},
 };
 
 Entry.defaultProps = {
@@ -82,6 +84,7 @@ Entry.defaultProps = {
     createdAt: new Date(),
   },
   username: undefined,
+  refreshData: PropTypes.func,
 };
 
 
