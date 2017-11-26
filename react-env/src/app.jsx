@@ -42,16 +42,22 @@ class App extends React.Component {
     };
 
     this.state.authenticator();
+    this.refreshData = this.refreshData.bind(this);
   }
 
-  componentDidUpdate() {
-    // this will be an axios invocation, but for now we use fake data
-
-    axios.get('/Threads')
-      .then((res) => {
-        this.setState({ threads: res.data }); // eslint-disable-line react/no-unused-state
-      });
+  componentDidMount() {
+    this.refreshData();
   }
+
+  //  Passed down as props through the CreateThread component in order for
+  //  the List component to re-render upon POST.
+  refreshData() {
+    axios
+      .get('/Threads')
+      .then(res => this.setState({ threads: res.data }));
+  }
+
+
   authenticator() {
     // checks if a session is actives
     // returns a user if session is active as well as confirming an active session
@@ -65,7 +71,7 @@ class App extends React.Component {
     return (
       <div>
         <Header user={this.state.user} isLoggedIn={this.state.isLoggedIn} />
-        <Main state={this.state} />
+        <Main state={this.state} refreshData={this.refreshData}/>
         <Footer />
       </div>
     );
@@ -73,9 +79,9 @@ class App extends React.Component {
 }
 
 
-const Main = ({ state }) => (
+const Main = ({ state, refreshData }) => (
   <Switch>
-    <Route exact path="/" render={() => <Home appState={state} />} />
+    <Route exact path="/" render={() => <Home appState={state} refreshData={refreshData} />} />
     <Route path="/signup" render={() => (<SignUp state={state} />)} />
     <Route path="/login" render={() => (<LoginWithCheck state={state} />)} />
     <Route path="/logout" render={() => (<Logout auth={state.authenticator} />)} />

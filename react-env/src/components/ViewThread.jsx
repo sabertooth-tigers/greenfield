@@ -6,16 +6,17 @@ import CreateComment from './CreateComment';
 import ThreadComment from './ThreadComment';
 
 //  Expects a single thread to get passed down as props.
-//  For now, iterates through a collection of comments, and renders each comment.
-
-const ViewThread = ({ username, thread, comments }) => (
+//  Iterates through a collection of comments, and renders each comment.
+const ViewThread = ({
+  username, thread, comments, refreshComments,
+}) => (
   <div>
     <div>
       <div>{thread.creatorId}</div>
       <h1>{thread.title}</h1>
       <div>{thread.description}</div>
     </div>
-    <CreateComment username={username} threadId={thread._id} />
+    <CreateComment username={username} threadId={thread._id} refreshComments={refreshComments} />
     {
       comments.map(comment =>
         (<ThreadComment
@@ -24,7 +25,8 @@ const ViewThread = ({ username, thread, comments }) => (
           createdAt={comment.createdAt}
           vote={comment.vote}
           text={comment.text}
-        />))}
+        />))
+    }
   </div>
 );
 
@@ -39,6 +41,7 @@ ViewThread.propTypes = {
   }),
   username: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.object),
+  refreshComments: PropTypes.func,
 };
 
 ViewThread.defaultProps = {
@@ -51,6 +54,7 @@ ViewThread.defaultProps = {
   },
   username: undefined,
   comments: [],
+  refreshComments: () => {},
 };
 
 export default ViewThread;

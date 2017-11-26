@@ -11,8 +11,6 @@ class Home extends React.Component {
       thread: this.props.appState.threads[0],
     };
 
-    console.log(this.props.appState.threads);
-
     this.threadClick = this.threadClick.bind(this);
   }
 
@@ -24,7 +22,11 @@ class Home extends React.Component {
     return (
       <div id="home">
         <List clickHandler={this.threadClick} threads={this.props.appState.threads} />
-        <Entry username="hello world" thread={this.state.thread} />
+        <Entry
+          username="hello world"
+          thread={this.state.thread}
+          refreshData={this.props.refreshData}
+        />
       </div>
     );
   }
@@ -42,6 +44,7 @@ Home.defaultProps = {
     threads: [],
     user: undefined,
   },
+  refreshData: () => {},
 };
 
 Home.propTypes = {
@@ -51,6 +54,7 @@ Home.propTypes = {
     threads: PropTypes.array,
     user: PropTypes.string,
   }),
+  refreshData: PropTypes.func,
 };
 
 export default Home;

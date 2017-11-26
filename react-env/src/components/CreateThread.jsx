@@ -27,7 +27,7 @@ class CreateThread extends React.Component {
         title: this.state.threadTitle,
         date: Date.now(),
       })
-      .then(() => this.setState({ isFormSubmitted: true }))
+      .then(() => this.setState({ isFormSubmitted: true }, () => { this.props.refreshData(); }))
       .catch(err => console.error(err));
   }
   //  One method that dynamically handles multiple input forms, depending on their name attribute
@@ -45,18 +45,22 @@ class CreateThread extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitThread}>
+          Enter thread title.
           <input
             type="textbox"
             value={this.state.threadTitle}
             name="threadTitle"
             onChange={this.handleInputChange}
           />
+          <br />
+          Enter thread description.
           <input
             type="textbox"
             value={this.state.threadDescription}
             name="threadDescription"
             onChange={this.handleInputChange}
           />
+          <br />
           <button type="submit">
             Create thread
           </button>
@@ -68,6 +72,11 @@ class CreateThread extends React.Component {
 
 CreateThread.propTypes = {
   username: PropTypes.string.isRequired,
+  refreshData: PropTypes.func,
+};
+
+CreateThread.defaultProps = {
+  refreshData: () => {},
 };
 
 export default CreateThread;
