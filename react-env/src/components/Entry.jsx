@@ -4,15 +4,7 @@ import PropTypes from 'prop-types';
 import CreateThread from './CreateThread';
 import ViewThread from './ViewThread';
 
-//  Contains the CreateThread button, that conditionally shows the CreateThread component.
-
-const fakeComment = {
-  userId: '2313123213213',
-  createdAt: new Date(),
-  vote: 0,
-  text: 'hello world',
-};
-
+//  Form displays when a user decides to create a new thread. Toggled in state via button.
 class Entry extends React.Component {
   constructor(props) {
     super(props);
@@ -30,13 +22,15 @@ class Entry extends React.Component {
     this.refreshComments();
   }
 
+  //  React lifecycle method triggered by new comment creation.
   componentDidUpdate(prevProps) {
     if (prevProps.thread._id !== this.props.thread._id) {
       this.refreshComments();
     }
   }
 
-
+  //  Handles getting all comments for a given thread.
+  //  Updates as different List threads are clicked.
   refreshComments() {
     axios
       .get(`/Comments?threadId=${this.props.thread._id}`)
@@ -50,16 +44,18 @@ class Entry extends React.Component {
     });
   }
 
-  //  Expects a single selected thread to be passed down from a collection.
+  //  Form for submitting a new problem is not displayed by default in order
+  //  to keep the UI clean. When the user clicks on a button, the form is shown.
   render() {
     const { username, thread, refreshData } = this.props;
+
     let buttonLabel = null;
     if (!this.state.isCreateThreadDisplayed) {
       buttonLabel = 'I have a problem';
     } else {
       buttonLabel = 'Never mind!';
     }
-    console.log('this.props.thread._ID: ', this.props.thread._id);
+
     return (
       <div id="entry">
         <ViewThread
@@ -80,7 +76,6 @@ class Entry extends React.Component {
   }
 }
 
-//  Not sure about mongoose threadId type (assuming number for now)
 Entry.propTypes = {
   thread: PropTypes.shape({
     _id: PropTypes.string.isRequired,

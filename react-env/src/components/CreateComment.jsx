@@ -18,7 +18,7 @@ class CreateComment extends React.Component {
     this.setState({ commentValue: e.target.value });
   }
 
-  //  TODO: modify post so that Entry re-renders newly created comment.
+  //  Re-renders the currently viewed thread upon comment submission.
   sendComment() {
     axios
       .post('/Comments', {
@@ -28,7 +28,7 @@ class CreateComment extends React.Component {
         date: Date.now(),
         vote: 0,
       })
-      .then(() => this.setState({ commentValue: '' }, () => { this.props.refreshComments() }))
+      .then(() => this.setState({ commentValue: '' }, () => { this.props.refreshComments(); }))
       .catch(err => console.error(err));
   }
 

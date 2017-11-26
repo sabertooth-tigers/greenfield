@@ -46,13 +46,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // this will be an axios invocation, but for now we use fake data
     this.refreshData();
   }
 
-  //  MH: Testing a passed down refresh.  If successful, will refactor along with
-  //  componentDidMount.
-
+  //  Passed down as props through the CreateThread component in order for
+  //  the List component to re-render upon POST.
   refreshData() {
     axios
       .get('/Threads')
