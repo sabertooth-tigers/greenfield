@@ -7,8 +7,9 @@ import ThreadComment from './ThreadComment';
 
 //  Expects a single thread to get passed down as props.
 //  Iterates through a collection of comments, and renders each comment.
-
-const ViewThread = ({ username, thread, comments, refreshComments }) => (
+const ViewThread = ({
+  username, thread, comments, refreshComments,
+}) => (
   <div>
     <div>
       <div>{thread.creatorId}</div>
