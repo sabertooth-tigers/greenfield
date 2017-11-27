@@ -28,6 +28,7 @@ const ViewThread = ({
     }
 
     {
+      comments ?
       comments.map(comment =>
         (<ThreadComment
           creator={comment.username}
@@ -35,7 +36,8 @@ const ViewThread = ({
           createdAt={comment.createdAt}
           vote={comment.vote}
           text={comment.text}
-        />))
+        />)) :
+        'no comments here'
     }
   </div>
 );
