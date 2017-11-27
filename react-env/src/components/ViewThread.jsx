@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import CreateComment from './CreateComment';
 import ThreadComment from './ThreadComment';
 
@@ -11,27 +12,30 @@ const ViewThread = ({
   username, thread, comments, refreshComments, currentUser,
 }) => (
   <div>
-    <div>
+    <div id="view-thread">
       <h1>{thread.title}</h1>
-      <div>{username || 'Anonymous'}</div>
-      <div>{thread.creatorId}</div>
+      <div>Author: {username || 'Anonymous'}</div>
+      <div>Created at:{moment(thread.createdAt).fromNow()}</div>
+      <br />
       <div>{thread.description}</div>
     </div>
-    {
-      currentUser ?
-        <CreateComment
-          username={currentUser}
-          threadId={thread._id}
-          refreshComments={refreshComments}
-        /> :
-        <h3>You must be logged in to post comments</h3>
-    }
-
+    <div id="create-comment">
+      {
+        currentUser ?
+          <CreateComment
+            username={currentUser}
+            threadId={thread._id}
+            refreshComments={refreshComments}
+          /> :
+          <h3>You must be logged in to post comments</h3>
+      }
+    </div>
     {
       comments ?
       comments.map(comment =>
         (<ThreadComment
           creator={comment.username}
+          id={comment._id}
           key={`${comment.username} ${comment.createdAt.toString()}`}
           createdAt={comment.createdAt}
           vote={comment.vote}

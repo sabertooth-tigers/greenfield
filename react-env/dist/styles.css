@@ -11,18 +11,53 @@ html {
 nav {
 	display: flex;
 	justify-content: space-between;
-	background: whitesmoke;
+	background: #3a93d3;
 	height: 30px;
 	margin: -7px -7px 7px -7px;
 }
 
+.comment {
+	background: #d3d3d3;
+	width: 95%;
+	margin: 10px auto;
+	padding: 10px;
+}
 
+.comment span {
+	font-weight: 600;
+}
+
+.comment .comment-created {
+	float: right;
+}
+.comment .comment-user {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.fa {
+	cursor: pointer;
+}
 .entry {
 	height: 500px;
 	background: whitesmoke;
 	margin: 0 5%;
 }
 
+#create-comment {
+	width: 95%;
+	padding: 10px;
+	margin: 0 auto;
+}
+
 #home {
 	display: flex;
+}
+
+#view-thread {
+	background: #d3d3d3;
+	width: 95%;
+	padding: 10px;
+	padding-top: 0;
+	margin: 0 auto;
 }

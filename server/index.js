@@ -61,23 +61,6 @@ app.get('/', (req, res) => {
   console.log('Now processing get from external source');
 });
 
-
-// app.get('/Threads', (req, res) => {
-//   console.log('Now processing get for Threads');
-// });
-
-// app.post('/Threads', (req, res) => {
-//   console.log('Now processing post for Threads');
-// });
-
-// app.get('/Comments', (req, res) => {
-//   console.log('Now processing get for Comments');
-// });
-
-// app.post('/Comments', (req, res) => {
-//   console.log('Now processing post for Comments');
-// });
-
 // ========================================
 // AUTHENTICATION ROUTES
 // ========================================
@@ -216,6 +199,22 @@ app.post('/Comments', (req, res) => {
       console.error(reason);
       res.end();
     });
+});
+
+// ===============================
+// UPVOTE/DOWNVOTE COMMENTS
+// ===============================
+
+app.patch('/vote', (req, res) => {
+  const update = req.body.method === 'upvote' ? { $inc: { vote: 1 } } : { $inc: { vote: -1 } };
+
+  db.CommentModel.findOneAndUpdate({ _id: req.body.commentId }, update)
+    .then(() => {
+      console.log('successful upvote/downvote is successful');
+    });
+
+
+  res.end();
 });
 
 // ===============================

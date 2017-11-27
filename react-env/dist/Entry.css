@@ -1,5 +1,12 @@
 #entry {
   background: whitesmoke;
   margin: 0 50px;
-  width: 700px;
+  width: 80%;
+  overflow: auto;
+}
+
+#entry .entry-header {
+  margin: 0 auto;
+  width: 95%;
+  padding: 0 10px;
 }
