@@ -14,9 +14,7 @@ class Home extends React.Component {
   }
 
   threadClick(threadObj) {
-    console.log('this is the first ', threadObj);
     this.setState(threadObj);
-    console.log('THIS IS THE STATE', this.state.thread);
   }
 
   render() {
