@@ -35,11 +35,12 @@ class ThreadComment extends React.Component {
     return (
       <div className="comment">
         <span className="comment-user">{creator} </span>
+        <span className="comment-created">Created at:{moment(createdAt).fromNow()}</span>
+        <div>{text}</div>
+        <br />
         <span onClick={this.upVote} className="fa fa-thumbs-up" aria-hidden="true" />
         <span> {this.state.votes} </span>
         <span onClick={this.downVote} className="fa fa-thumbs-down" aria-hidden="true" />
-        <span className="comment-created">Created at:{moment(createdAt).fromNow()}</span>
-        <div>{text}</div>
       </div>
     );
   }
