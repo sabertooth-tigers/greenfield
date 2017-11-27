@@ -222,9 +222,4 @@ app.post('/Comments', (req, res) => {
 // ===============================
 // LISTENER
 // ===============================
-app.listen(process.env.PORT || 3000, (err) => {
-  if (err) {
-    throw Error(err);
-  }
-  console.log(`server has started on ${process.env.PORT || 3000}`);
-});
+app.listen(process.env.PORT || 3000);
