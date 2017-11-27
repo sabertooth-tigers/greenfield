@@ -18,7 +18,9 @@ class SignUpForm extends React.Component {
     };
 
     // checks if we still are in a session
-    this.props.auth();
+    if (this.props.auth) {
+      this.props.auth();
+    }
 
     // this is here simply so i don't have to use .bind for every call. (also render looks cleaner)
     this.emailQuery = this.emailQuery.bind(this);

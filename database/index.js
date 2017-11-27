@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 //  You might have to clear your original test db or change this to a new database
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/test');
 const dbConnect = mongoose.connection;
 const Promise = require('bluebird');
 
@@ -27,10 +27,13 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.plugin(passportLocalMongoose);
-
+/* eslint-disable */
 const threadSchema = mongoose.Schema(
   {
-    creatorId: String,
+    creatorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'UserModel',
+    },
     description: String,
     title: String,
     createdAt: Date,
@@ -38,17 +41,22 @@ const threadSchema = mongoose.Schema(
   },
   {
     timestamps: true,
-  },
-);
+  });
 
-const commentSchema = mongoose.Schema({
+const commentSchema = mongoose.Schema(
+{
   text: String,
-  threadId: String,
-  userId: String,
-  createdAt: Date,
-  vote: Number,
+  threadId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'ThreadModel',
+  },
+  username: String,
+  vote: { type: Number, default: 0 },
+},
+{
+  timestamps: true,
 });
-
+/* eslint-enable */
 //  constructor
 exports.UserModel = mongoose.model('UserModel', userSchema);
 const ThreadModel = mongoose.model('ThreadModel', threadSchema);
@@ -75,13 +83,7 @@ exports.saveThread = (thread) => {
 };
 
 exports.saveComment = (comment) => {
-  const newComment = new CommentModel({
-    threadId: comment.threadId,
-    text: comment.text,
-    userId: comment.username,
-    createdAt: comment.date,
-    vote: comment.vote,
-  });
+  const newComment = new CommentModel(comment);
 
   newComment.save((err) => { if (err) return err; return true; });
 };

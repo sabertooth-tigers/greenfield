@@ -6,12 +6,11 @@ import Entry from './Entry';
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.threadClick = this.threadClick.bind(this);
 
     this.state = {
-      thread: this.props.appState.threads[0],
+      thread: undefined,
     };
-
-    this.threadClick = this.threadClick.bind(this);
   }
 
   threadClick(threadObj) {
@@ -21,10 +20,14 @@ class Home extends React.Component {
   render() {
     return (
       <div id="home">
-        <List clickHandler={this.threadClick} threads={this.props.appState.threads} />
+        <List
+          clickHandler={this.threadClick}
+          username={this.props.appState.user}
+          threads={this.props.appState.threads}
+        />
         <Entry
-          username="hello world"
-          thread={this.state.thread}
+          username={this.props.appState.user}
+          thread={this.state.thread || this.props.appState.firstThread}
           refreshData={this.props.refreshData}
         />
       </div>
@@ -42,6 +45,7 @@ Home.defaultProps = {
     isLoggedIn: false,
     authenticator: undefined,
     threads: [],
+    firstThread: undefined,
     user: undefined,
   },
   refreshData: () => {},
@@ -52,6 +56,7 @@ Home.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired,
     authenticator: PropTypes.func,
     threads: PropTypes.array,
+    firstThread: PropTypes.object,
     user: PropTypes.string,
   }),
   refreshData: PropTypes.func,

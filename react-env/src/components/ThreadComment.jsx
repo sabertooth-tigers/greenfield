@@ -22,7 +22,7 @@ ThreadComment.propTypes = {
 
 //  These should never render because ViewThread prevents handling empty comment collections.
 ThreadComment.defaultProps = {
-  creator: 'Nahn Existent',
+  creator: 'Anonymous',
   createdAt: new Date(),
   vote: 0,
   text: 'This should not be rendered.',

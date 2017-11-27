@@ -7,7 +7,7 @@ import ThreadEntry from './threadListEntry';
 
 // TODO:
 // ThreadEntry key should be _id, none in fake data so for now use index
-const List = ({ threads, clickHandler }) => (
+const List = ({ username, threads, clickHandler }) => (
   //  CHANGE NAME OF VARIALBE WHEN DECIDED IN App
   //  Do we need () around {} after => ?
   //  USE index if _.id doesn't work. Assumptions that we will get _.id because of mongoose
@@ -17,7 +17,12 @@ const List = ({ threads, clickHandler }) => (
     {threads.map(threadEntry => (
       <div>
         <hr />
-        <ThreadEntry onClickHandler={clickHandler} entry={threadEntry} key={threadEntry._id} />
+        <ThreadEntry
+          username={username}
+          onClickHandler={clickHandler}
+          entry={threadEntry}
+          key={threadEntry._id}
+        />
       </div>
     ))}
     <hr />
@@ -31,11 +36,13 @@ const List = ({ threads, clickHandler }) => (
 
 List.defaultProps = {
   threads: [],
+  username: 'Anonymous',
   clickHandler: undefined,
 };
 
 List.propTypes = {
   threads: PropTypes.arrayOf(PropTypes.object),
+  username: PropTypes.string,
   clickHandler: PropTypes.func,
 };
 export default List;

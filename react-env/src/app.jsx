@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import Home from './components/Home';
@@ -10,19 +10,6 @@ import SignUp from './components/SignUp';
 import Login from './components/Login';
 import Logout from './components/Logout';
 import Header from './components/Header';
-
-const Footer = () => (
-  <div>
-    <div>
-      <Link to="/">Home</Link>
-    </div>
-    <div>
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Sign Up</Link>
-    </div>
-  </div>
-
-);
 
 
 class App extends React.Component {
@@ -33,6 +20,7 @@ class App extends React.Component {
       isLoggedIn: false,
       user: null,
       threads: [], // eslint-disable-line react/no-unused-state
+      firstThread: undefined, // eslint-disable-line react/no-unused-state
       // NOTE: authenticator is NOT a state
       // the reason why i put this here is to make it easier to pass props
       // and make it look cleaner on the components
@@ -54,7 +42,12 @@ class App extends React.Component {
   refreshData() {
     axios
       .get('/Threads')
-      .then(res => this.setState({ threads: res.data }));
+      .then(res => this.setState({
+        /* eslint-disable */
+        threads: res.data,
+        firstThread: res.data[0],
+        /* esline-enable */
+      }));
   }
 
 
@@ -72,7 +65,6 @@ class App extends React.Component {
       <div>
         <Header user={this.state.user} isLoggedIn={this.state.isLoggedIn} />
         <Main state={this.state} refreshData={this.refreshData}/>
-        <Footer />
       </div>
     );
   }
@@ -138,9 +130,5 @@ LoginWithCheck.propTypes = {
   }),
 };
 
-ReactDOM.render(
-  <HashRouter>
-    <App />
-  </HashRouter>
-  , document.getElementById('root'),
-);
+ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
+

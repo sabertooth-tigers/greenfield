@@ -107,15 +107,15 @@ app.get('/login', (req, res) => {
 
 // TODO: make this work with Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req.isAuthenticated());
-
   res.end();
 });
 
-// app.get('/Users', (req, res) => {
-//   console.log('Now processing get for Users');
-
-// });
+app.get('/Users', (req, res) => {
+  db.findUserPromise({ _id: req.query.id })
+    .then((data) => {
+      res.send(data[0]);
+    });
+});
 
 
 // The sign up route,
@@ -140,7 +140,6 @@ app.post('/Users', (req, res) => {
 });
 
 app.get('/email', (req, res) => {
-  console.log(req.query.email);
   let emailExists = false;
   let userExists = false;
 
@@ -153,7 +152,6 @@ app.get('/email', (req, res) => {
       return db.findUserPromise({ username: req.query.username });
     })
     .then((data) => {
-      console.log(data);
       if (data.length > 0) {
         userExists = true;
       }
@@ -186,7 +184,7 @@ app.post('/Threads', (req, res) => {
     .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 
@@ -199,7 +197,7 @@ app.get('/Comments', (req, res) => {
     .then(results => res.send(results))
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 
@@ -216,16 +214,11 @@ app.post('/Comments', (req, res) => {
     .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 
 // ===============================
 // LISTENER
 // ===============================
-app.listen(process.env.PORT || 3000, (err) => {
-  if (err) {
-    throw Error(err);
-  }
-  console.log(`server has started on ${process.env.PORT || 3000}`);
-});
+app.listen(process.env.PORT || 3000);
