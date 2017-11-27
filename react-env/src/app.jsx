@@ -131,4 +131,3 @@ LoginWithCheck.propTypes = {
 };
 
 ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
-

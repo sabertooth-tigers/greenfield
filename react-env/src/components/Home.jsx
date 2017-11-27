@@ -14,7 +14,9 @@ class Home extends React.Component {
   }
 
   threadClick(threadObj) {
+    console.log('this is the first ', threadObj);
     this.setState(threadObj);
+    console.log('THIS IS THE STATE', this.state.thread);
   }
 
   render() {
@@ -29,6 +31,8 @@ class Home extends React.Component {
           username={this.props.appState.user}
           thread={this.state.thread || this.props.appState.firstThread}
           refreshData={this.props.refreshData}
+          threadClick={this.threadClick}
+          threads={this.props.appState.threads}
         />
       </div>
     );
