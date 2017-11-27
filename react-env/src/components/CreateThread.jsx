@@ -28,8 +28,16 @@ class CreateThread extends React.Component {
         description: this.state.threadDescription,
         title: this.state.threadTitle,
       })
-      .then(() => this.setState({ isFormSubmitted: true }, () => { this.props.refreshData(); }))
-      .catch(err => console.error(err));
+      .then(() => this.props.toggle())
+      .then(() => {
+        axios.get('/Threads')
+          .then(({ data }) => this.props.clickThread({ thread: data[data.length - 1] }))
+          .catch(err => console.error(err));
+      });
+
+    // .then(() => this.setState({ isFormSubmitted: true }, () => { this.props.refreshData(); }))
+    // .then(() => this.props.toggle())
+    // .catch(err => console.error(err));
   }
   //  One method that dynamically handles multiple input forms, depending on their name attribute
   handleInputChange(e) {
@@ -45,27 +53,26 @@ class CreateThread extends React.Component {
     }
     return (
       <div>
-        <form onSubmit={this.submitThread}>
-          Enter thread title.
-          <input
-            type="textbox"
-            placeholder={this.state.threadTitle}
-            name="threadTitle"
-            onChange={this.handleInputChange}
-          />
-          <br />
-          Enter thread description.
-          <input
-            type="textbox"
-            placeholder={this.state.threadDescription}
-            name="threadDescription"
-            onChange={this.handleInputChange}
-          />
-          <br />
-          <button type="submit">
+        Enter thread title.
+        <input
+          type="textarea"
+          placeholder={this.state.threadTitle}
+          name="threadTitle"
+          onChange={this.handleInputChange}
+        />
+        <br />
+        Enter thread description.
+        <input
+          type="textarea"
+          placeholder={this.state.threadDescription}
+          name="threadDescription"
+          onChange={this.handleInputChange}
+        />
+        <br />
+        <button type="submit" onClick={this.submitThread}>
             Create thread
-          </button>
-        </form>
+        </button>
+
       </div>
     );
   }
@@ -73,11 +80,13 @@ class CreateThread extends React.Component {
 
 CreateThread.propTypes = {
   username: PropTypes.string.isRequired,
-  refreshData: PropTypes.func,
+  toggle: PropTypes.func,
+  clickThread: PropTypes.func,
 };
 
 CreateThread.defaultProps = {
-  refreshData: () => {},
+  toggle: () => {},
+  clickThread: () => {},
 };
 
 export default CreateThread;

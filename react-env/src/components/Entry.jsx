@@ -83,9 +83,16 @@ class Entry extends React.Component {
             <button onClick={this.toggleCreateThread}>
               {buttonLabel}
             </button>
+            <CreateThread
+              username={username}
+              refreshData={refreshData}
+              clickThread={this.props.threadClick}
+              toggle={this.toggleCreateThread}
+            />
           </div>
-          <CreateThread username={username} refreshData={refreshData} />
         </div>
+
+
       );
     }
 
@@ -131,6 +138,7 @@ Entry.propTypes = {
   }),
   username: PropTypes.string,
   refreshData: PropTypes.func,
+  threadClick: PropTypes.func,
 };
 
 Entry.defaultProps = {
@@ -143,6 +151,7 @@ Entry.defaultProps = {
   },
   username: 'A. Nonymous',
   refreshData: () => {},
+  threadClick: () => {},
 };
 
 
