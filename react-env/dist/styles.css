@@ -44,3 +44,9 @@ nav {
 #home {
 	display: flex;
 }
+
+#view-thread {
+	background: #d3d3d3;
+	width: 96.5%;
+	margin: 0 auto;
+}

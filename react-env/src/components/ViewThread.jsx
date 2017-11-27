@@ -2,6 +2,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import CreateComment from './CreateComment';
 import ThreadComment from './ThreadComment';
 
@@ -11,10 +12,11 @@ const ViewThread = ({
   username, thread, comments, refreshComments, currentUser,
 }) => (
   <div>
-    <div>
+    <div id="view-thread">
       <h1>{thread.title}</h1>
-      <div>{username || 'Anonymous'}</div>
-      <div>{thread.creatorId}</div>
+      <div>Author: {username || 'Anonymous'}</div>
+      <div>Created at:{moment(thread.createdAt).fromNow()}</div>
+      <br />
       <div>{thread.description}</div>
     </div>
     {
