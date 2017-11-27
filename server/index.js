@@ -152,7 +152,6 @@ app.get('/email', (req, res) => {
       return db.findUserPromise({ username: req.query.username });
     })
     .then((data) => {
-      console.log(data);
       if (data.length > 0) {
         userExists = true;
       }
@@ -185,7 +184,7 @@ app.post('/Threads', (req, res) => {
     .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 
@@ -198,7 +197,7 @@ app.get('/Comments', (req, res) => {
     .then(results => res.send(results))
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 
@@ -215,7 +214,7 @@ app.post('/Comments', (req, res) => {
     .then(() => res.send())
     .catch((reason) => {
       console.error(reason);
-      res.statusCode(500).end();
+      res.end();
     });
 });
 

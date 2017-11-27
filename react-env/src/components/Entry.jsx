@@ -131,7 +131,7 @@ Entry.propTypes = {
 
 Entry.defaultProps = {
   thread: {
-    _id: '999999999',
+    _id: undefined,
     creatorId: 'A. Nonymous',
     description: 'This is a default thread description',
     title: 'This is a default thread title',
