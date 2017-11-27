@@ -41,6 +41,11 @@ nav {
 	margin: 0 5%;
 }
 
+#create-comment {
+	width: 96.5%;
+	margin: 0 auto;
+}
+
 #home {
 	display: flex;
 }

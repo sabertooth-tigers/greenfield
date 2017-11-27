@@ -3,7 +3,7 @@
 	height: 85vh;
 	background: whitesmoke;
 	padding: 10px 30px 10px 30px;
-	overflow: scroll;
+	overflow: auto;
 }
 
 #list > h2 {
@@ -17,4 +17,8 @@
 
 #list .thread-entry {
 	cursor: pointer;
+}
+
+#list .thread-entry:hover {
+	background: #d3d3d3;
 }

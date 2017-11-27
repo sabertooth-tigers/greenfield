@@ -19,16 +19,17 @@ const ViewThread = ({
       <br />
       <div>{thread.description}</div>
     </div>
-    {
-      currentUser ?
-        <CreateComment
-          username={currentUser}
-          threadId={thread._id}
-          refreshComments={refreshComments}
-        /> :
-        <h3>You must be logged in to post comments</h3>
-    }
-
+    <div id="create-comment">
+      {
+        currentUser ?
+          <CreateComment
+            username={currentUser}
+            threadId={thread._id}
+            refreshComments={refreshComments}
+          /> :
+          <h3>You must be logged in to post comments</h3>
+      }
+    </div>
     {
       comments ?
       comments.map(comment =>
