@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import moment from 'moment';
 //  Conforming to Airbnb linter here, combined with destructuring.
 const ThreadComment = ({
   creator, createdAt, vote, text,
 }) => (
-  <div>
-    <div>{creator}</div>
-    <div>{createdAt.toString()}</div>
-    <div>{vote}</div>
+  <div className="comment">
+    <span className="comment-user">{creator} </span>
+    <span>Votes: {vote} </span>
+    <span className="comment-created">Created at:{moment(createdAt).fromNow()}</span>
     <div>{text}</div>
   </div>
 );
