@@ -219,6 +219,22 @@ app.post('/Comments', (req, res) => {
 });
 
 // ===============================
+// UPVOTE/DOWNVOTE COMMENTS
+// ===============================
+
+app.patch('/vote', (req, res) => {
+  const update = req.body.method === 'upvote' ? { $inc: { vote: 1 } } : { $inc: { vote: -1 } };
+
+  db.CommentModel.findOneAndUpdate({ _id: req.body.commentId }, update)
+    .then(() => {
+      console.log('successful upvote/downvote is successful');
+    });
+
+
+  res.end();
+});
+
+// ===============================
 // LISTENER
 // ===============================
 app.listen(process.env.PORT || 3000);

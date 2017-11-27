@@ -35,6 +35,7 @@ const ViewThread = ({
       comments.map(comment =>
         (<ThreadComment
           creator={comment.username}
+          id={comment._id}
           key={`${comment.username} ${comment.createdAt.toString()}`}
           createdAt={comment.createdAt}
           vote={comment.vote}

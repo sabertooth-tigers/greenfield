@@ -62,6 +62,7 @@ exports.UserModel = mongoose.model('UserModel', userSchema);
 const ThreadModel = mongoose.model('ThreadModel', threadSchema);
 const CommentModel = mongoose.model('CommentModel', commentSchema);
 
+exports.CommentModel = CommentModel;
 // Do we need to return for save?
 exports.saveUser = (user) => {
   const newUser = new exports.UserModel({
