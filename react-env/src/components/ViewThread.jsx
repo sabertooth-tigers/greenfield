@@ -8,20 +8,30 @@ import ThreadComment from './ThreadComment';
 //  Expects a single thread to get passed down as props.
 //  Iterates through a collection of comments, and renders each comment.
 const ViewThread = ({
-  username, thread, comments, refreshComments,
+  username, thread, comments, refreshComments, currentUser,
 }) => (
   <div>
     <div>
-      <div>{thread.creatorId}</div>
       <h1>{thread.title}</h1>
+      <div>{username || 'Anonymous'}</div>
+      <div>{thread.creatorId}</div>
       <div>{thread.description}</div>
     </div>
-    <CreateComment username={username} threadId={thread._id} refreshComments={refreshComments} />
+    {
+      currentUser ?
+        <CreateComment
+          username={currentUser}
+          threadId={thread._id}
+          refreshComments={refreshComments}
+        /> :
+        <h3>You must be logged in to post comments</h3>
+    }
+
     {
       comments.map(comment =>
         (<ThreadComment
-          creator={comment.userId}
-          key={`${comment.userId} ${comment.createdAt.toString()}`}
+          creator={comment.username}
+          key={`${comment.username} ${comment.createdAt.toString()}`}
           createdAt={comment.createdAt}
           vote={comment.vote}
           text={comment.text}
@@ -39,6 +49,7 @@ ViewThread.propTypes = {
     title: PropTypes.string.isRequired,
     createdAt: PropTypes.instanceOf(Date).isRequired,
   }),
+  currentUser: PropTypes.string,
   username: PropTypes.string,
   comments: PropTypes.arrayOf(PropTypes.object),
   refreshComments: PropTypes.func,
@@ -52,6 +63,7 @@ ViewThread.defaultProps = {
     title: 'There are no problems in the world!',
     createdAt: new Date(),
   },
+  currentUser: undefined,
   username: undefined,
   comments: [],
   refreshComments: () => {},

@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 import axios from 'axios';
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -11,7 +13,12 @@ class Entry extends React.Component {
     this.state = {
       isCreateThreadDisplayed: false,
       threadComments: [],
+      username: undefined,
     };
+
+    if (this.props.username) {
+      this.currentUser = this.props.username.username;
+    }
 
     this.toggleCreateThread = this.toggleCreateThread.bind(this);
     this.refreshComments = this.refreshComments.bind(this);
@@ -25,12 +32,26 @@ class Entry extends React.Component {
   //  React lifecycle method triggered by new comment creation.
   componentDidUpdate(prevProps) {
     if (prevProps.thread._id !== this.props.thread._id) {
+      this.getUser();
       this.refreshComments();
     }
   }
 
   //  Handles getting all comments for a given thread.
   //  Updates as different List threads are clicked.
+
+
+  getUser() {
+    if (this.props.thread.creatorId) {
+      axios.get(`/Users?id=${this.props.thread.creatorId}`)
+        .then(({ data }) => {
+          this.setState({ username: data.username });
+        });
+    } else {
+      this.setState({ username: undefined });
+    }
+  }
+
   refreshComments() {
     axios
       .get(`/Comments?threadId=${this.props.thread._id}`)
@@ -44,35 +65,55 @@ class Entry extends React.Component {
     });
   }
 
-  //  Form for submitting a new problem is not displayed by default in order
-  //  to keep the UI clean. When the user clicks on a button, the form is shown.
-  render() {
+  toggleEntryDisplay() {
     const { username, thread, refreshData } = this.props;
-
     let buttonLabel = null;
+
     if (!this.state.isCreateThreadDisplayed) {
-      buttonLabel = 'I have a problem';
+      buttonLabel = 'Click me!';
     } else {
       buttonLabel = 'Never mind!';
     }
 
+    if (this.state.isCreateThreadDisplayed) {
+      return (
+        <div id="entry">
+          <h3 style={{ display: 'inline' }}>So...no problem at all? </h3>
+          <button onClick={this.toggleCreateThread}>
+            {buttonLabel}
+          </button>
+          <CreateThread username={username} refreshData={refreshData} />
+        </div>
+      );
+    }
+
     return (
       <div id="entry">
+        {
+          this.currentUser ?
+            <div>
+              <h3 style={{ display: 'inline' }}>Have a problem? </h3>
+              <button onClick={this.toggleCreateThread}>
+                {buttonLabel}
+              </button>
+            </div> :
+            <h3>Have a problem? Register to get help</h3>
+        }
+
         <ViewThread
-          username={username}
+          currentUser={this.currentUser}
+          username={this.state.username}
           thread={thread}
           comments={this.state.threadComments}
           refreshComments={this.refreshComments}
         />
-        <br />
-        <br />
-        <button onClick={this.toggleCreateThread}>
-          {buttonLabel}
-        </button>
-        {this.state.isCreateThreadDisplayed &&
-        <CreateThread username={username} refreshData={refreshData} />}
       </div>
     );
+  }
+  //  Form for submitting a new problem is not displayed by default in order
+  //  to keep the UI clean. When the user clicks on a button, the form is shown.
+  render() {
+    return this.toggleEntryDisplay();
   }
 }
 
@@ -96,7 +137,7 @@ Entry.defaultProps = {
     title: 'This is a default thread title',
     createdAt: new Date(),
   },
-  username: undefined,
+  username: 'A. Nonymous',
   refreshData: () => {},
 };
 

@@ -107,15 +107,15 @@ app.get('/login', (req, res) => {
 
 // TODO: make this work with Login
 app.post('/login', passport.authenticate('local'), (req, res) => {
-  console.log(req.isAuthenticated());
-
   res.end();
 });
 
-// app.get('/Users', (req, res) => {
-//   console.log('Now processing get for Users');
-
-// });
+app.get('/Users', (req, res) => {
+  db.findUserPromise({ _id: req.query.id })
+    .then((data) => {
+      res.send(data[0]);
+    });
+});
 
 
 // The sign up route,
@@ -140,7 +140,6 @@ app.post('/Users', (req, res) => {
 });
 
 app.get('/email', (req, res) => {
-  console.log(req.query.email);
   let emailExists = false;
   let userExists = false;
 

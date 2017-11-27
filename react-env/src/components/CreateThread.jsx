@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle: ["error", { "allow": ["_id"] }] */
+
 import React from 'react';
 import axios from 'axios';
 import { Redirect } from 'react-router';
@@ -22,10 +24,9 @@ class CreateThread extends React.Component {
     e.preventDefault();
     axios
       .post('/Threads', {
-        creator: this.props.username,
+        creatorId: this.props.username._id.toString(),
         description: this.state.threadDescription,
         title: this.state.threadTitle,
-        date: Date.now(),
       })
       .then(() => this.setState({ isFormSubmitted: true }, () => { this.props.refreshData(); }))
       .catch(err => console.error(err));
@@ -48,7 +49,7 @@ class CreateThread extends React.Component {
           Enter thread title.
           <input
             type="textbox"
-            value={this.state.threadTitle}
+            placeholder={this.state.threadTitle}
             name="threadTitle"
             onChange={this.handleInputChange}
           />
@@ -56,7 +57,7 @@ class CreateThread extends React.Component {
           Enter thread description.
           <input
             type="textbox"
-            value={this.state.threadDescription}
+            placeholder={this.state.threadDescription}
             name="threadDescription"
             onChange={this.handleInputChange}
           />

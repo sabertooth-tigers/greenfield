@@ -25,8 +25,6 @@ class CreateComment extends React.Component {
         threadId: this.props.threadId,
         text: this.state.commentValue,
         username: this.props.username,
-        date: Date.now(),
-        vote: 0,
       })
       .then(() => this.setState({ commentValue: '' }, () => { this.props.refreshComments(); }))
       .catch(err => console.error(err));
