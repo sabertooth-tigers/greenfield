@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
 
 //  You might have to clear your original test db or change this to a new database
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(process.env.DATABASE_URL || 'mongodb://localhost/test');
 const dbConnect = mongoose.connection;
 const Promise = require('bluebird');
 
