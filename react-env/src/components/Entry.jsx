@@ -78,10 +78,12 @@ class Entry extends React.Component {
     if (this.state.isCreateThreadDisplayed) {
       return (
         <div id="entry">
-          <h3 style={{ display: 'inline' }}>So...no problem at all? </h3>
-          <button onClick={this.toggleCreateThread}>
-            {buttonLabel}
-          </button>
+          <div className="entry-header">
+            <h3 style={{ display: 'inline' }}>So...no problem at all? </h3>
+            <button onClick={this.toggleCreateThread}>
+              {buttonLabel}
+            </button>
+          </div>
           <CreateThread username={username} refreshData={refreshData} />
         </div>
       );
@@ -91,13 +93,15 @@ class Entry extends React.Component {
       <div id="entry">
         {
           this.currentUser ?
-            <div>
+            <div className="entry-header">
               <h3 style={{ display: 'inline' }}>Have a problem? </h3>
               <button onClick={this.toggleCreateThread}>
                 {buttonLabel}
               </button>
             </div> :
-            <h3>Have a problem? Register to get help</h3>
+            <div className="entry-header">
+              <h3>Have a problem? Register to get help</h3>
+            </div>
         }
 
         <ViewThread

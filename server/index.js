@@ -61,23 +61,6 @@ app.get('/', (req, res) => {
   console.log('Now processing get from external source');
 });
 
-
-// app.get('/Threads', (req, res) => {
-//   console.log('Now processing get for Threads');
-// });
-
-// app.post('/Threads', (req, res) => {
-//   console.log('Now processing post for Threads');
-// });
-
-// app.get('/Comments', (req, res) => {
-//   console.log('Now processing get for Comments');
-// });
-
-// app.post('/Comments', (req, res) => {
-//   console.log('Now processing post for Comments');
-// });
-
 // ========================================
 // AUTHENTICATION ROUTES
 // ========================================
