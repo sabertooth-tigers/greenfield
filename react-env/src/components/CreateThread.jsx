@@ -2,7 +2,6 @@
 
 import React from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router';
 import PropTypes from 'prop-types';
 
 class CreateThread extends React.Component {
@@ -13,7 +12,6 @@ class CreateThread extends React.Component {
     this.state = {
       threadTitle: '1-line summary of your problem',
       threadDescription: 'Please provide more details here',
-      isFormSubmitted: false,
     };
 
     this.submitThread = this.submitThread.bind(this);
@@ -28,6 +26,7 @@ class CreateThread extends React.Component {
         description: this.state.threadDescription,
         title: this.state.threadTitle,
       })
+      .then(() => { this.props.refreshData(); })
       .then(() => this.props.toggle())
       .then(() => {
         axios.get('/Threads')
@@ -46,11 +45,6 @@ class CreateThread extends React.Component {
 
   //  Conditionally redirects to root route when form is submitted
   render() {
-    if (this.state.isFormSubmitted) {
-      return (
-        <Redirect to="/" />
-      );
-    }
     return (
       <div>
         Enter thread title.
@@ -79,12 +73,14 @@ class CreateThread extends React.Component {
 }
 
 CreateThread.propTypes = {
+  refreshData: PropTypes.func,
   username: PropTypes.string.isRequired,
   toggle: PropTypes.func,
   clickThread: PropTypes.func,
 };
 
 CreateThread.defaultProps = {
+  refreshData: () => {},
   toggle: () => {},
   clickThread: () => {},
 };
